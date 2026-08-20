@@ -290,16 +290,28 @@
   /* ---------- diagrams ---------- */
   .subcard.has-diagram { grid-column: 1 / -1; }
   .diagram { margin: 0 0 14px; }
+  .diagram figure { margin: 0; }
   .diagram svg { width: 100%; height: auto; display: block; overflow: visible; }
-  .diagram .fbox { fill: var(--card); stroke: var(--u-color); stroke-width: 1.6; }
-  .diagram .fbox.hi { stroke-width: 2.6; fill: var(--accent-bg); }
-  .diagram .flabel { font-family: "Noto Sans TC", sans-serif; font-size: 11px; font-weight: 700; fill: var(--ink); text-anchor: middle; }
-  .diagram .fsub { font-family: "Noto Sans TC", sans-serif; font-size: 9px; fill: var(--ink-muted); text-anchor: middle; }
-  .diagram .fnote { font-family: "Noto Sans TC", sans-serif; font-size: 10px; fill: var(--ink-muted); text-anchor: middle; }
-  .diagram .fcallout { font-family: "Noto Sans TC", sans-serif; font-size: 10px; font-weight: 700; fill: var(--accent-ring); text-anchor: middle; }
-  .diagram .fline { stroke: var(--u-color); stroke-width: 1.6; fill: none; }
-  .diagram .fdash { stroke-dasharray: 4 3; }
+  .diagram figcaption {
+    margin-top: 10px; padding-top: 10px;
+    border-top: 1px dashed color-mix(in oklab, var(--u-color) 35%, var(--hairline));
+    font-size: 12px; color: var(--ink-2); line-height: 1.7; text-align: left;
+  }
+  .diagram .fbox { fill: var(--card); stroke: var(--u-color); stroke-width: 2; }
+  .diagram .fbox.hi { stroke-width: 3; fill: var(--accent-bg); stroke: var(--accent-ring); }
+  .diagram .fbox.solid { fill: var(--u-color); fill-opacity: 0.85; stroke: none; }
+  .diagram .flabel { font-family: "Noto Sans TC", sans-serif; font-size: 13px; font-weight: 700; fill: var(--ink); text-anchor: middle; }
+  .diagram .flabel.on-solid { fill: var(--card); }
+  .diagram .fsub { font-family: "Noto Sans TC", sans-serif; font-size: 11px; fill: var(--ink-muted); text-anchor: middle; }
+  .diagram .fnote { font-family: "Noto Sans TC", sans-serif; font-size: 11.5px; font-weight: 700; fill: var(--ink-2); text-anchor: middle; }
+  .diagram .ftick { font-family: "Noto Sans TC", sans-serif; font-size: 10px; fill: var(--ink-muted); text-anchor: middle; }
+  .diagram .fcallout { font-family: "Noto Sans TC", sans-serif; font-size: 12px; font-weight: 700; fill: var(--accent-ring); text-anchor: middle; }
+  .diagram .fline { stroke: var(--u-color); stroke-width: 2; fill: none; }
+  .diagram .fdash { stroke-dasharray: 5 4; }
+  .diagram .faxis { stroke: var(--ink-muted); stroke-width: 1.3; fill: none; }
   .diagram .fbar { stroke: none; }
+  .diagram .flegend-dot { }
+  .diagram .flegend text { font-family: "Noto Sans TC", sans-serif; font-size: 11px; fill: var(--ink-2); }
   .subcard ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
   .subcard li { font-size: 12.5px; line-height: 1.6; color: var(--ink-2); }
   .subcard li b { color: var(--ink); font-weight: 700; }
@@ -486,20 +498,19 @@
           ["專案的正式定義", "「為創建一獨特的產品、服務或結果所做的一次性努力」是專案最正式的定義句型，常整句考選擇題。", 0]
         ]},
         { name: "五大流程群組",
-          diagram: '<svg viewBox="0 0 640 110" role="img" aria-label="五大流程群組時序圖">' +
-            '<defs><marker id="pg-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--u-color)"/></marker></defs>' +
-            '<path d="M450,50 C450,8 190,8 190,50" class="fline fdash" marker-end="url(#pg-arrow)"/>' +
-            '<text x="320" y="16" class="fnote">績效不如預期時，反覆回頭調整規劃—執行—監控</text>' +
-            '<rect x="6" y="55" width="94" height="42" rx="8" class="fbox"/><text x="53" y="80" class="flabel">起始</text>' +
-            '<line x1="100" y1="76" x2="126" y2="76" class="fline" marker-end="url(#pg-arrow)"/>' +
-            '<rect x="130" y="55" width="94" height="42" rx="8" class="fbox"/><text x="177" y="80" class="flabel">規劃</text>' +
-            '<line x1="224" y1="76" x2="250" y2="76" class="fline" marker-end="url(#pg-arrow)"/>' +
-            '<rect x="254" y="55" width="94" height="42" rx="8" class="fbox"/><text x="301" y="80" class="flabel">執行</text>' +
-            '<line x1="348" y1="76" x2="374" y2="76" class="fline" marker-end="url(#pg-arrow)"/>' +
-            '<rect x="378" y="55" width="94" height="42" rx="8" class="fbox"/><text x="425" y="72" class="flabel">監視及</text><text x="425" y="88" class="flabel">控制</text>' +
-            '<line x1="472" y1="76" x2="498" y2="76" class="fline" marker-end="url(#pg-arrow)"/>' +
-            '<rect x="502" y="55" width="94" height="42" rx="8" class="fbox"/><text x="549" y="80" class="flabel">結束</text>' +
-            '</svg>',
+          diagram: '<figure><svg viewBox="0 0 640 245" role="img" aria-label="五大流程群組在時間軸上的重疊關係圖">' +
+            '<defs><marker id="pg-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="currentColor"/></marker></defs>' +
+            '<text x="320" y="16" class="fnote">五大流程群組在「時間」上是重疊的，不是切成五段各自獨立</text>' +
+            '<rect x="60" y="34" width="150" height="26" rx="5" class="fbox solid" fill="var(--c1)"/><text x="135" y="52" class="flabel on-solid">① 起始</text>' +
+            '<rect x="150" y="70" width="300" height="26" rx="5" class="fbox solid" fill="var(--c2)"/><text x="300" y="88" class="flabel on-solid">② 規劃</text>' +
+            '<rect x="330" y="106" width="260" height="26" rx="5" class="fbox solid" fill="var(--c3)"/><text x="460" y="124" class="flabel on-solid">③ 執行</text>' +
+            '<rect x="140" y="142" width="450" height="26" rx="5" class="fbox solid" fill="var(--c4)"/><text x="365" y="160" class="flabel on-solid">④ 監視及控制（貫穿全程）</text>' +
+            '<rect x="560" y="178" width="70" height="26" rx="5" class="fbox solid" fill="var(--c5)"/><text x="595" y="196" class="flabel on-solid">⑤ 結束</text>' +
+            '<line x1="55" y1="215" x2="630" y2="215" class="faxis" marker-end="url(#pg-arrow)"/>' +
+            '<text x="342" y="230" class="ftick">專案時間 →</text>' +
+            '</svg>' +
+            '<figcaption>橫條的左右範圍代表這個流程群組實際發生的時間區間，不是先後排隊的順序。規劃、執行、監視及控制三者大幅重疊——尤其監視及控制幾乎貫穿整個專案，這也是題庫常考「與變更關係最密切的是監視及控制」的原因。</figcaption>' +
+            '</figure>',
           points: [
           ["五大流程群組", "起始、規劃、執行、監視及控制、結束，是專案管理知識體系的骨架，幾乎每個知識領域都會對應到其中幾個群組。", 1, [
             ["起始 Initiating", "正式確認專案或階段的存在並授權開始，主要產出是發展專案章程。"],
@@ -513,16 +524,24 @@
           ["專案成本花費最多的階段", "絕大多數的專案成本會在「執行」階段被花費掉，這點常跟「起始/規劃階段不確定性最高」放在一起考。", 1]
         ]},
         { name: "組織結構類型",
-          diagram: '<svg viewBox="0 0 640 100" role="img" aria-label="組織結構光譜圖">' +
-            '<defs><marker id="org-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--u-color)"/></marker></defs>' +
-            '<line x1="10" y1="16" x2="630" y2="16" class="fline" marker-end="url(#org-arrow)"/>' +
-            '<text x="320" y="10" class="fnote">PM 對專案的職權越來越大 →</text>' +
-            '<rect x="10" y="34" width="124" height="30" fill="var(--u-color)" fill-opacity="0.12" stroke="none"/><text x="72" y="80" class="fsub">功能式</text>' +
-            '<rect x="134" y="34" width="124" height="30" fill="var(--u-color)" fill-opacity="0.32" stroke="none"/><text x="196" y="80" class="fsub">弱矩陣</text>' +
-            '<rect x="258" y="34" width="124" height="30" fill="var(--u-color)" fill-opacity="0.52" stroke="none"/><text x="320" y="80" class="fsub">平衡矩陣</text>' +
-            '<rect x="382" y="34" width="124" height="30" fill="var(--u-color)" fill-opacity="0.74" stroke="none"/><text x="444" y="80" class="fsub">強矩陣</text>' +
-            '<rect x="506" y="34" width="124" height="30" fill="var(--u-color)" fill-opacity="1" stroke="none"/><text x="568" y="80" class="fsub">專案式</text>' +
-            '</svg>',
+          diagram: '<figure><svg viewBox="0 0 640 140" role="img" aria-label="五種組織結構中PM職權大小光譜圖">' +
+            '<defs><marker id="org-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="currentColor"/></marker></defs>' +
+            '<text x="320" y="14" class="fnote">PM 對專案資源與決策的職權，由左到右遞增</text>' +
+            '<circle cx="72" cy="34" r="4" fill="var(--u-color)"/>' +
+            '<circle cx="188" cy="34" r="4" fill="var(--u-color)"/><circle cx="204" cy="34" r="4" fill="var(--u-color)"/>' +
+            '<circle cx="304" cy="34" r="4" fill="var(--u-color)"/><circle cx="320" cy="34" r="4" fill="var(--u-color)"/><circle cx="336" cy="34" r="4" fill="var(--u-color)"/>' +
+            '<circle cx="428" cy="34" r="4" fill="var(--u-color)"/><circle cx="444" cy="34" r="4" fill="var(--u-color)"/><circle cx="460" cy="34" r="4" fill="var(--u-color)"/><circle cx="476" cy="34" r="4" fill="var(--u-color)"/>' +
+            '<circle cx="552" cy="34" r="4" fill="var(--u-color)"/><circle cx="568" cy="34" r="4" fill="var(--u-color)"/><circle cx="584" cy="34" r="4" fill="var(--u-color)"/><circle cx="600" cy="34" r="4" fill="var(--u-color)"/><circle cx="616" cy="34" r="4" fill="var(--u-color)"/>' +
+            '<rect x="10" y="50" width="124" height="34" rx="5" fill="var(--u-color)" fill-opacity="0.16" stroke="var(--u-color)" stroke-width="1.5"/><text x="72" y="71" class="flabel">功能式</text>' +
+            '<rect x="134" y="50" width="124" height="34" rx="5" fill="var(--u-color)" fill-opacity="0.34" stroke="var(--u-color)" stroke-width="1.5"/><text x="196" y="71" class="flabel">弱矩陣</text>' +
+            '<rect x="258" y="50" width="124" height="34" rx="5" fill="var(--u-color)" fill-opacity="0.52" stroke="var(--u-color)" stroke-width="1.5"/><text x="320" y="71" class="flabel">平衡矩陣</text>' +
+            '<rect x="382" y="50" width="124" height="34" rx="5" fill="var(--u-color)" fill-opacity="0.74" stroke="var(--u-color)" stroke-width="1.5"/><text x="444" y="71" class="flabel">強矩陣</text>' +
+            '<rect x="506" y="50" width="124" height="34" rx="5" fill="var(--u-color)" fill-opacity="1" stroke="none"/><text x="568" y="71" class="flabel on-solid">專案式</text>' +
+            '<text x="72" y="104" class="fsub">PM 近乎無職權</text>' +
+            '<text x="568" y="104" class="fsub">PM 職權最大</text>' +
+            '</svg>' +
+            '<figcaption>頂端的圓點數量代表 PM 職權高低——功能式最少（PM 近乎沒有正式職權，需向功能經理討資源），一路增加到專案式最多（PM 幾乎全權主導）。弱矩陣、平衡矩陣、強矩陣是中間過渡的三個級距，區分依據就是 PM 與功能經理誰的話語權比較大。</figcaption>' +
+            '</figure>',
           points: [
           ["五種組織結構光譜", "從功能式到專案式，中間夾著弱矩陣/平衡矩陣/強矩陣，PM 的職權大小隨光譜遞增，是這個大類的核心考點。", 1, [
             ["功能式 Functional", "依專業分組，PM 幾乎無正式職權，員工向單一功能經理負責、指揮系統清楚。"],
@@ -619,37 +638,43 @@
           ]]
         ]},
         { name: "時程規劃",
-          diagram: '<svg viewBox="0 0 650 240" role="img" aria-label="前導圖四種邏輯關係圖">' +
-            '<defs><marker id="seq-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--u-color)"/></marker></defs>' +
-            '<g transform="translate(0,0)">' +
-              '<text x="155" y="12" class="flabel">完成-開始 FS</text>' +
-              '<text x="10" y="37" class="fsub">A</text><rect x="30" y="25" width="100" height="16" rx="4" class="fbox"/>' +
-              '<text x="10" y="75" class="fsub">B</text><rect x="170" y="63" width="100" height="16" rx="4" class="fbox"/>' +
-              '<path d="M130,33 L150,33 L150,71 L168,71" class="fline" marker-end="url(#seq-arrow)"/>' +
-              '<text x="155" y="98" class="fnote">A 完成 → B 才能開始</text>' +
+          diagram: '<figure><svg viewBox="0 0 650 260" role="img" aria-label="前導圖四種邏輯關係對照圖">' +
+            '<defs><marker id="seq-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="currentColor"/></marker></defs>' +
+            '<g transform="translate(6,6)">' +
+              '<text x="150" y="12" class="flabel">完成-開始 FS（最常用）</text>' +
+              '<text x="14" y="42" class="fsub">A</text><rect x="30" y="30" width="100" height="20" rx="4" class="fbox"/>' +
+              '<text x="14" y="82" class="fsub">B</text><rect x="170" y="70" width="100" height="20" rx="4" class="fbox"/>' +
+              '<path d="M130,40 L150,40 L150,80 L168,80" class="fline" marker-end="url(#seq-arrow)"/>' +
+              '<text x="130" y="26" class="ftick">迄</text><text x="170" y="66" class="ftick">起</text>' +
+              '<text x="150" y="108" class="fnote">A「完成」了，B 才能「開始」</text>' +
             '</g>' +
-            '<g transform="translate(320,0)">' +
-              '<text x="155" y="12" class="flabel">開始-開始 SS</text>' +
-              '<text x="10" y="37" class="fsub">A</text><rect x="50" y="25" width="100" height="16" rx="4" class="fbox"/>' +
-              '<text x="10" y="75" class="fsub">B</text><rect x="50" y="63" width="140" height="16" rx="4" class="fbox"/>' +
-              '<path d="M50,33 L50,69" class="fline" marker-end="url(#seq-arrow)"/>' +
-              '<text x="155" y="98" class="fnote">A 開始 → B 才能開始</text>' +
+            '<g transform="translate(326,6)">' +
+              '<text x="150" y="12" class="flabel">開始-開始 SS</text>' +
+              '<text x="14" y="42" class="fsub">A</text><rect x="50" y="30" width="100" height="20" rx="4" class="fbox"/>' +
+              '<text x="14" y="82" class="fsub">B</text><rect x="50" y="70" width="140" height="20" rx="4" class="fbox"/>' +
+              '<path d="M50,40 L50,80" class="fline" marker-end="url(#seq-arrow)"/>' +
+              '<text x="50" y="26" class="ftick">起</text><text x="50" y="66" class="ftick">起</text>' +
+              '<text x="150" y="108" class="fnote">A「開始」了，B 才能「開始」</text>' +
             '</g>' +
-            '<g transform="translate(0,115)">' +
-              '<text x="155" y="12" class="flabel">完成-完成 FF</text>' +
-              '<text x="10" y="37" class="fsub">A</text><rect x="30" y="25" width="140" height="16" rx="4" class="fbox"/>' +
-              '<text x="10" y="75" class="fsub">B</text><rect x="90" y="63" width="80" height="16" rx="4" class="fbox"/>' +
-              '<path d="M170,33 L170,69" class="fline" marker-end="url(#seq-arrow)"/>' +
-              '<text x="155" y="98" class="fnote">A 完成 → B 才能完成</text>' +
+            '<g transform="translate(6,132)">' +
+              '<text x="150" y="12" class="flabel">完成-完成 FF</text>' +
+              '<text x="14" y="42" class="fsub">A</text><rect x="30" y="30" width="140" height="20" rx="4" class="fbox"/>' +
+              '<text x="14" y="82" class="fsub">B</text><rect x="90" y="70" width="80" height="20" rx="4" class="fbox"/>' +
+              '<path d="M170,40 L170,80" class="fline" marker-end="url(#seq-arrow)"/>' +
+              '<text x="170" y="26" class="ftick">迄</text><text x="170" y="66" class="ftick">迄</text>' +
+              '<text x="150" y="108" class="fnote">A「完成」了，B 才能「完成」</text>' +
             '</g>' +
-            '<g transform="translate(320,115)">' +
-              '<text x="155" y="12" class="flabel">開始-完成 SF（最少見）</text>' +
-              '<text x="10" y="37" class="fsub">A</text><rect x="150" y="25" width="100" height="16" rx="4" class="fbox"/>' +
-              '<text x="10" y="75" class="fsub">B</text><rect x="50" y="63" width="100" height="16" rx="4" class="fbox"/>' +
-              '<path d="M150,33 L150,69" class="fline" marker-end="url(#seq-arrow)"/>' +
-              '<text x="155" y="98" class="fnote">A 開始 → B 才能完成</text>' +
+            '<g transform="translate(326,132)">' +
+              '<text x="150" y="12" class="flabel">開始-完成 SF（最少見）</text>' +
+              '<text x="14" y="42" class="fsub">A</text><rect x="150" y="30" width="100" height="20" rx="4" class="fbox"/>' +
+              '<text x="14" y="82" class="fsub">B</text><rect x="50" y="70" width="100" height="20" rx="4" class="fbox"/>' +
+              '<path d="M150,40 L150,80" class="fline" marker-end="url(#seq-arrow)"/>' +
+              '<text x="150" y="26" class="ftick">起</text><text x="150" y="66" class="ftick">迄</text>' +
+              '<text x="150" y="108" class="fnote">A「開始」了，B 才能「完成」</text>' +
             '</g>' +
-            '</svg>',
+            '</svg>' +
+            '<figcaption>每個方框代表一個活動的持續期間；框上標的「起」「迄」是箭頭實際連接的那個時間點。四種關係只差在連接哪一點對哪一點——這正是考試最愛拿來互換考的地方。</figcaption>' +
+            '</figure>',
           points: [
           ["CPM 要徑法 vs PERT 計畫評核術", "CPM 用單時估算法、以經驗數據為基礎，適合確定性較高的專案；PERT 用三點估算法，適合高不確定性、複雜度高的專案。", 1, [
             ["CPM 要徑法", "以經驗數據為基礎的單時估算，找出工期最長、浮時為零的路徑。"],
@@ -721,21 +746,24 @@
       name: "專案執行（Executing）", short: "執行", count: 130, key: "c4",
       subtopics: [
         { name: "團隊發展與組織行為",
-          diagram: '<svg viewBox="0 0 640 132" role="img" aria-label="團隊發展五階段時序圖">' +
-            '<defs><marker id="tm-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--u-color)"/></marker></defs>' +
-            '<text x="320" y="10" class="fnote">Tuckman 團隊發展模型</text>' +
-            '<rect x="4" y="20" width="94" height="42" rx="8" class="fbox"/><text x="51" y="38" class="flabel">組建</text><text x="51" y="52" class="fsub">Forming</text>' +
-            '<line x1="98" y1="41" x2="122" y2="41" class="fline" marker-end="url(#tm-arrow)"/>' +
-            '<rect x="126" y="20" width="94" height="42" rx="8" class="fbox"/><text x="173" y="38" class="flabel">風暴</text><text x="173" y="52" class="fsub">Storming</text>' +
-            '<line x1="220" y1="41" x2="244" y2="41" class="fline" marker-end="url(#tm-arrow)"/>' +
-            '<rect x="248" y="20" width="94" height="42" rx="8" class="fbox"/><text x="295" y="38" class="flabel">正軌</text><text x="295" y="52" class="fsub">Norming</text>' +
-            '<line x1="342" y1="41" x2="366" y2="41" class="fline" marker-end="url(#tm-arrow)"/>' +
-            '<rect x="370" y="20" width="94" height="42" rx="8" class="fbox"/><text x="417" y="38" class="flabel">展現</text><text x="417" y="52" class="fsub">Performing</text>' +
-            '<line x1="464" y1="41" x2="488" y2="41" class="fline" marker-end="url(#tm-arrow)"/>' +
-            '<rect x="492" y="20" width="94" height="42" rx="8" class="fbox"/><text x="539" y="38" class="flabel">解散</text><text x="539" y="52" class="fsub">Adjourning</text>' +
-            '<path d="M14,120 C120,120 120,80 230,80 S380,88 630,72" class="fline fdash"/>' +
-            '<text x="320" y="129" class="fnote">團隊效能隨階段推進而提升，解散時任務／專案已結束</text>' +
-            '</svg>',
+          diagram: '<figure><svg viewBox="0 0 640 235" role="img" aria-label="Tuckman團隊發展五階段績效曲線圖">' +
+            '<text x="320" y="14" class="fnote">Tuckman 團隊發展模型：績效隨階段推進而變化</text>' +
+            '<line x1="30" y1="205" x2="610" y2="205" class="faxis"/>' +
+            '<text x="600" y="222" class="ftick">時間 →</text>' +
+            '<path d="M60,140 Q125,182 190,172 Q255,160 320,100 Q385,52 450,48 Q515,55 580,102" class="fline" fill="none"/>' +
+            '<circle cx="60" cy="140" r="5" fill="var(--u-color)"/>' +
+            '<circle cx="190" cy="172" r="5" fill="var(--u-color)"/>' +
+            '<circle cx="320" cy="100" r="5" fill="var(--u-color)"/>' +
+            '<circle cx="450" cy="48" r="5" fill="var(--u-color)"/>' +
+            '<circle cx="580" cy="102" r="5" fill="var(--u-color)"/>' +
+            '<text x="60" y="168" class="flabel">組建</text><text x="60" y="184" class="fsub">Forming</text>' +
+            '<text x="190" y="196" class="flabel">風暴</text><text x="190" y="212" class="fsub">Storming・績效最低</text>' +
+            '<text x="320" y="80" class="flabel">正軌</text><text x="320" y="66" class="fsub">Norming</text>' +
+            '<text x="450" y="30" class="flabel">展現</text><text x="450" y="16" class="fsub">Performing・績效高峰</text>' +
+            '<text x="580" y="128" class="flabel">解散</text><text x="580" y="144" class="fsub">Adjourning</text>' +
+            '</svg>' +
+            '<figcaption>績效不是一路往上：風暴期（Storming）成員意見衝突，效能反而是全程最低點；撐過磨合、進入正軌（Norming）後才開始明顯提升，在展現期（Performing）達到高峰。這條「先降後升」的曲線正是題庫最愛考的重點。</figcaption>' +
+            '</figure>',
           points: [
           ["團隊發展五階段", "組建（Forming）、風暴（Storming）、正軌（Norming）、展現（Performing）、解散（Adjourning），是執行大類最高頻的考點之一。", 1, [
             ["組建 Forming", "團隊剛成立，成員彼此陌生、依賴指示行事。"],
@@ -783,19 +811,26 @@
           ["品質保證的產出", "組織流程資產更新、請求變更、建議的矯正行動，不含「品質管理計畫」本身（那是規劃階段的產出）。", 0]
         ]},
         { name: "採購執行",
-          diagram: '<svg viewBox="0 0 700 118" role="img" aria-label="採購管理五流程時序圖">' +
-            '<defs><marker id="pc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--u-color)"/></marker></defs>' +
-            '<rect x="4" y="20" width="128" height="42" rx="8" class="fbox"/><text x="68" y="46" class="flabel">規劃採購</text>' +
-            '<line x1="132" y1="41" x2="154" y2="41" class="fline" marker-end="url(#pc-arrow)"/>' +
-            '<rect x="158" y="20" width="128" height="42" rx="8" class="fbox"/><text x="222" y="46" class="flabel">邀商</text>' +
-            '<line x1="286" y1="41" x2="308" y2="41" class="fline" marker-end="url(#pc-arrow)"/>' +
-            '<rect x="312" y="20" width="128" height="42" rx="8" class="fbox hi"/><text x="376" y="46" class="flabel">執行採購</text>' +
-            '<line x1="440" y1="41" x2="462" y2="41" class="fline" marker-end="url(#pc-arrow)"/>' +
-            '<rect x="466" y="20" width="128" height="42" rx="8" class="fbox"/><text x="530" y="46" class="flabel">控制採購</text>' +
-            '<line x1="594" y1="41" x2="616" y2="41" class="fline" marker-end="url(#pc-arrow)"/>' +
-            '<rect x="620" y="20" width="76" height="42" rx="8" class="fbox"/><text x="658" y="40" class="flabel">結束</text><text x="658" y="55" class="flabel">採購</text>' +
-            '<text x="376" y="80" class="fcallout">★ 本子主題對應這一步</text>' +
-            '</svg>',
+          diagram: '<figure><svg viewBox="0 0 700 150" role="img" aria-label="採購管理五流程圖，標示本子主題聚焦於執行採購">' +
+            '<defs><marker id="pc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="currentColor"/></marker></defs>' +
+            '<circle cx="30" cy="24" r="13" fill="var(--u-color)"/><text x="30" y="29" class="flabel on-solid">1</text>' +
+            '<rect x="4" y="42" width="128" height="42" rx="8" class="fbox"/><text x="68" y="68" class="flabel">規劃採購</text>' +
+            '<line x1="132" y1="63" x2="154" y2="63" class="fline" marker-end="url(#pc-arrow)"/>' +
+            '<circle cx="184" cy="24" r="13" fill="var(--u-color)"/><text x="184" y="29" class="flabel on-solid">2</text>' +
+            '<rect x="158" y="42" width="128" height="42" rx="8" class="fbox"/><text x="222" y="68" class="flabel">邀商</text>' +
+            '<line x1="286" y1="63" x2="308" y2="63" class="fline" marker-end="url(#pc-arrow)"/>' +
+            '<circle cx="376" cy="24" r="13" fill="var(--accent-ring)"/><text x="376" y="29" class="flabel on-solid">3</text>' +
+            '<rect x="312" y="42" width="128" height="42" rx="8" class="fbox hi"/><text x="376" y="68" class="flabel">執行採購</text>' +
+            '<line x1="440" y1="63" x2="462" y2="63" class="fline" marker-end="url(#pc-arrow)"/>' +
+            '<circle cx="530" cy="24" r="13" fill="var(--u-color)"/><text x="530" y="29" class="flabel on-solid">4</text>' +
+            '<rect x="466" y="42" width="128" height="42" rx="8" class="fbox"/><text x="530" y="68" class="flabel">控制採購</text>' +
+            '<line x1="594" y1="63" x2="616" y2="63" class="fline" marker-end="url(#pc-arrow)"/>' +
+            '<circle cx="658" cy="24" r="13" fill="var(--u-color)"/><text x="658" y="29" class="flabel on-solid">5</text>' +
+            '<rect x="620" y="42" width="76" height="42" rx="8" class="fbox"/><text x="658" y="62" class="flabel">結束</text><text x="658" y="77" class="flabel">採購</text>' +
+            '<text x="376" y="110" class="fcallout">↑ 本子主題聚焦在「執行採購」這一步</text>' +
+            '</svg>' +
+            '<figcaption>採購管理是一條線性流程，跟五大流程群組不同，沒有明顯的重疊。紅框標出的「執行採購」是實際去邀標、談判、簽約選出賣方的階段，也是本子主題（採購執行）的內容範圍。</figcaption>' +
+            '</figure>',
           points: [
           ["採購管理五流程", "規劃採購管理 → 邀商（Request Seller Response）→ 執行採購（Conduct Procurements）→ 控制採購 → 結束採購，執行大類主要對應中間的「執行採購」。", 0],
           ["執行採購的 ITTO", "投入含採購管理計畫書、採購文件、合格賣方清單；工具技術含投標人會議、廣告、採購談判；產出含合約、選定賣方。", 1, [
@@ -838,18 +873,30 @@
           ["柏拉圖法則（80/20 法則）", "80% 問題的產生可歸責於 20% 的缺失原因，常直接考「這個原理稱為下列哪一項」。", 1]
         ]},
         { name: "時程與成本控制",
-          diagram: '<svg viewBox="0 0 500 168" role="img" aria-label="EVM三大量測值比較圖">' +
-            '<text x="250" y="12" class="fnote">範例：進度落後且超支的專案（實務上三者高低會依實際狀況變動）</text>' +
-            '<line x1="20" y1="140" x2="480" y2="140" class="fline"/>' +
-            '<rect x="60" y="40" width="70" height="100" fill="var(--u-color)" fill-opacity="0.85" class="fbar"/>' +
-            '<rect x="215" y="75" width="70" height="65" fill="var(--u-color)" fill-opacity="0.45" class="fbar"/>' +
-            '<rect x="370" y="55" width="70" height="85" fill="var(--accent-ring)" fill-opacity="0.7" class="fbar"/>' +
-            '<text x="95" y="152" class="flabel">PV</text><text x="95" y="164" class="fsub">計畫值</text>' +
-            '<text x="250" y="152" class="flabel">EV</text><text x="250" y="164" class="fsub">實獲值</text>' +
-            '<text x="405" y="152" class="flabel">AC</text><text x="405" y="164" class="fsub">實際成本</text>' +
-            '<text x="250" y="28" class="fcallout">EV 低於 PV → 時程落後（SV為負）</text>' +
-            '<text x="250" y="42" class="fcallout">EV 低於 AC → 成本超支（CV為負）</text>' +
-            '</svg>',
+          diagram: '<figure><svg viewBox="0 0 580 300" role="img" aria-label="EVM實獲值管理S曲線圖，PV高於AC高於EV代表進度落後且超支">' +
+            '<text x="290" y="14" class="fnote">範例：截至「資料日期」，進度落後且超支的專案</text>' +
+            '<line x1="50" y1="30" x2="50" y2="235" class="faxis"/>' +
+            '<line x1="45" y1="230" x2="545" y2="230" class="faxis"/>' +
+            '<text x="30" y="30" class="ftick">累積金額</text>' +
+            '<text x="540" y="248" class="ftick">時間 →</text>' +
+            '<line x1="290" y1="26" x2="290" y2="230" class="fline fdash" stroke="var(--ink-muted)"/>' +
+            '<text x="290" y="264" class="ftick">資料日期（現在）</text>' +
+            '<path d="M50,230 C160,225 210,150 280,120 C360,85 420,60 540,50" class="fline" stroke="var(--u-color)" stroke-width="2.6" fill="none"/>' +
+            '<path d="M50,230 C140,227 190,190 240,175 C260,170 275,167 290,165" class="fline" stroke="var(--c3)" stroke-width="2.6" fill="none"/>' +
+            '<path d="M50,230 C140,225 200,175 250,150 C265,145 278,142 290,140" class="fline fdash" stroke="var(--accent-ring)" stroke-width="2.6" fill="none"/>' +
+            '<circle cx="290" cy="115" r="5" fill="var(--u-color)"/><text x="304" y="112" class="flabel" text-anchor="start">PV</text>' +
+            '<circle cx="290" cy="140" r="5" fill="var(--accent-ring)"/><text x="304" y="145" class="flabel" text-anchor="start" fill="var(--accent-ring)">AC</text>' +
+            '<circle cx="290" cy="165" r="5" fill="var(--c3)"/><text x="304" y="180" class="flabel" text-anchor="start" fill="var(--c3)">EV</text>' +
+            '<g class="flegend">' +
+              '<line x1="55" y1="278" x2="85" y2="278" class="fline" stroke="var(--u-color)" stroke-width="2.6"/><text x="92" y="282">PV 計畫值（依計畫應完成多少）</text>' +
+              '<line x1="315" y1="278" x2="345" y2="278" class="fline" stroke="var(--c3)" stroke-width="2.6"/><text x="352" y="282">EV 實獲值（實際完成多少）</text>' +
+            '</g>' +
+            '<g class="flegend">' +
+              '<line x1="55" y1="296" x2="85" y2="296" class="fline fdash" stroke="var(--accent-ring)" stroke-width="2.6"/><text x="92" y="300">AC 實際成本（實際花了多少）</text>' +
+            '</g>' +
+            '</svg>' +
+            '<figcaption>三條線在「資料日期」這一刻的高低順序，就是判讀 SV／CV 的關鍵：EV 低於 PV → 時程落後（SV=EV−PV 為負）；EV 低於 AC → 成本超支（CV=EV−AC 為負）。三線的相對高低會隨專案實際狀況改變，不是固定的。</figcaption>' +
+            '</figure>',
           points: [
           ["控制時程的正確步驟", "分析時程以決定是否採行校正行動、決定所要採行的特定校正行動、修正計畫並併入校正行動——不包含「更換專案團隊」這種過度反應。", 0],
           ["EVM 三大基本量", "計畫值 PV（目前為止應完成多少工作）、實獲值 EV（目前多少工作已完成）、實際成本 AC（實際花費多少），是成本控制的計算基礎。", 1, [
