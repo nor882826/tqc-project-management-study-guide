@@ -267,6 +267,20 @@
     color: var(--ink);
     font-family: "Noto Sans TC", sans-serif;
   }
+
+  /* ---------- diagrams ---------- */
+  .subcard.has-diagram { grid-column: 1 / -1; }
+  .diagram { margin: 0 0 14px; }
+  .diagram svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .diagram .fbox { fill: var(--card); stroke: var(--u-color); stroke-width: 1.6; }
+  .diagram .fbox.hi { stroke-width: 2.6; fill: var(--accent-bg); }
+  .diagram .flabel { font-family: "Noto Sans TC", sans-serif; font-size: 11px; font-weight: 700; fill: var(--ink); text-anchor: middle; }
+  .diagram .fsub { font-family: "Noto Sans TC", sans-serif; font-size: 9px; fill: var(--ink-muted); text-anchor: middle; }
+  .diagram .fnote { font-family: "Noto Sans TC", sans-serif; font-size: 10px; fill: var(--ink-muted); text-anchor: middle; }
+  .diagram .fcallout { font-family: "Noto Sans TC", sans-serif; font-size: 10px; font-weight: 700; fill: var(--accent-ring); text-anchor: middle; }
+  .diagram .fline { stroke: var(--u-color); stroke-width: 1.6; fill: none; }
+  .diagram .fdash { stroke-dasharray: 4 3; }
+  .diagram .fbar { stroke: none; }
   .subcard ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
   .subcard li { font-size: 12.5px; line-height: 1.6; color: var(--ink-2); }
   .subcard li b { color: var(--ink); font-weight: 700; }
@@ -451,7 +465,22 @@
           ["專案的產出可以是什麼", "產品、服務或結果都算專案產出，不限於實體產品，也可以是報告或里程碑。", 0],
           ["專案的正式定義", "「為創建一獨特的產品、服務或結果所做的一次性努力」是專案最正式的定義句型，常整句考選擇題。", 0]
         ]},
-        { name: "五大流程群組", points: [
+        { name: "五大流程群組",
+          diagram: '<svg viewBox="0 0 640 110" role="img" aria-label="五大流程群組時序圖">' +
+            '<defs><marker id="pg-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--u-color)"/></marker></defs>' +
+            '<path d="M450,50 C450,8 190,8 190,50" class="fline fdash" marker-end="url(#pg-arrow)"/>' +
+            '<text x="320" y="16" class="fnote">績效不如預期時，反覆回頭調整規劃—執行—監控</text>' +
+            '<rect x="6" y="55" width="94" height="42" rx="8" class="fbox"/><text x="53" y="80" class="flabel">起始</text>' +
+            '<line x1="100" y1="76" x2="126" y2="76" class="fline" marker-end="url(#pg-arrow)"/>' +
+            '<rect x="130" y="55" width="94" height="42" rx="8" class="fbox"/><text x="177" y="80" class="flabel">規劃</text>' +
+            '<line x1="224" y1="76" x2="250" y2="76" class="fline" marker-end="url(#pg-arrow)"/>' +
+            '<rect x="254" y="55" width="94" height="42" rx="8" class="fbox"/><text x="301" y="80" class="flabel">執行</text>' +
+            '<line x1="348" y1="76" x2="374" y2="76" class="fline" marker-end="url(#pg-arrow)"/>' +
+            '<rect x="378" y="55" width="94" height="42" rx="8" class="fbox"/><text x="425" y="72" class="flabel">監視及</text><text x="425" y="88" class="flabel">控制</text>' +
+            '<line x1="472" y1="76" x2="498" y2="76" class="fline" marker-end="url(#pg-arrow)"/>' +
+            '<rect x="502" y="55" width="94" height="42" rx="8" class="fbox"/><text x="549" y="80" class="flabel">結束</text>' +
+            '</svg>',
+          points: [
           ["五大流程群組", "起始、規劃、執行、監視及控制、結束，是專案管理知識體系的骨架，幾乎每個知識領域都會對應到其中幾個群組。", 1, [
             ["起始 Initiating", "正式確認專案或階段的存在並授權開始，主要產出是發展專案章程。"],
             ["規劃 Planning", "確定範疇、精進目標，擬定達成目標所需的行動方案與計畫書。"],
@@ -463,7 +492,18 @@
           ["贊助者影響力最大的階段", "利害關係人（尤其贊助者）的影響力在專案「起始」階段最大，隨專案進行逐漸遞減。", 1],
           ["專案成本花費最多的階段", "絕大多數的專案成本會在「執行」階段被花費掉，這點常跟「起始/規劃階段不確定性最高」放在一起考。", 1]
         ]},
-        { name: "組織結構類型", points: [
+        { name: "組織結構類型",
+          diagram: '<svg viewBox="0 0 640 100" role="img" aria-label="組織結構光譜圖">' +
+            '<defs><marker id="org-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--u-color)"/></marker></defs>' +
+            '<line x1="10" y1="16" x2="630" y2="16" class="fline" marker-end="url(#org-arrow)"/>' +
+            '<text x="320" y="10" class="fnote">PM 對專案的職權越來越大 →</text>' +
+            '<rect x="10" y="34" width="124" height="30" fill="var(--u-color)" fill-opacity="0.12" stroke="none"/><text x="72" y="80" class="fsub">功能式</text>' +
+            '<rect x="134" y="34" width="124" height="30" fill="var(--u-color)" fill-opacity="0.32" stroke="none"/><text x="196" y="80" class="fsub">弱矩陣</text>' +
+            '<rect x="258" y="34" width="124" height="30" fill="var(--u-color)" fill-opacity="0.52" stroke="none"/><text x="320" y="80" class="fsub">平衡矩陣</text>' +
+            '<rect x="382" y="34" width="124" height="30" fill="var(--u-color)" fill-opacity="0.74" stroke="none"/><text x="444" y="80" class="fsub">強矩陣</text>' +
+            '<rect x="506" y="34" width="124" height="30" fill="var(--u-color)" fill-opacity="1" stroke="none"/><text x="568" y="80" class="fsub">專案式</text>' +
+            '</svg>',
+          points: [
           ["五種組織結構光譜", "從功能式到專案式，中間夾著弱矩陣/平衡矩陣/強矩陣，PM 的職權大小隨光譜遞增，是這個大類的核心考點。", 1, [
             ["功能式 Functional", "依專業分組，PM 幾乎無正式職權，員工向單一功能經理負責、指揮系統清楚。"],
             ["弱矩陣 Weak Matrix", "PM 角色接近協調者／促進者（Expediter），權力小，仍受制於功能經理。"],
@@ -558,7 +598,39 @@
             ["里程碑清單 Milestone List", "列出專案的重要時間點，是否為強制性里程碑也會標註。"]
           ]]
         ]},
-        { name: "時程規劃", points: [
+        { name: "時程規劃",
+          diagram: '<svg viewBox="0 0 650 240" role="img" aria-label="前導圖四種邏輯關係圖">' +
+            '<defs><marker id="seq-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--u-color)"/></marker></defs>' +
+            '<g transform="translate(0,0)">' +
+              '<text x="155" y="12" class="flabel">完成-開始 FS</text>' +
+              '<text x="10" y="37" class="fsub">A</text><rect x="30" y="25" width="100" height="16" rx="4" class="fbox"/>' +
+              '<text x="10" y="75" class="fsub">B</text><rect x="170" y="63" width="100" height="16" rx="4" class="fbox"/>' +
+              '<path d="M130,33 L150,33 L150,71 L168,71" class="fline" marker-end="url(#seq-arrow)"/>' +
+              '<text x="155" y="98" class="fnote">A 完成 → B 才能開始</text>' +
+            '</g>' +
+            '<g transform="translate(320,0)">' +
+              '<text x="155" y="12" class="flabel">開始-開始 SS</text>' +
+              '<text x="10" y="37" class="fsub">A</text><rect x="50" y="25" width="100" height="16" rx="4" class="fbox"/>' +
+              '<text x="10" y="75" class="fsub">B</text><rect x="50" y="63" width="140" height="16" rx="4" class="fbox"/>' +
+              '<path d="M50,33 L50,69" class="fline" marker-end="url(#seq-arrow)"/>' +
+              '<text x="155" y="98" class="fnote">A 開始 → B 才能開始</text>' +
+            '</g>' +
+            '<g transform="translate(0,115)">' +
+              '<text x="155" y="12" class="flabel">完成-完成 FF</text>' +
+              '<text x="10" y="37" class="fsub">A</text><rect x="30" y="25" width="140" height="16" rx="4" class="fbox"/>' +
+              '<text x="10" y="75" class="fsub">B</text><rect x="90" y="63" width="80" height="16" rx="4" class="fbox"/>' +
+              '<path d="M170,33 L170,69" class="fline" marker-end="url(#seq-arrow)"/>' +
+              '<text x="155" y="98" class="fnote">A 完成 → B 才能完成</text>' +
+            '</g>' +
+            '<g transform="translate(320,115)">' +
+              '<text x="155" y="12" class="flabel">開始-完成 SF（最少見）</text>' +
+              '<text x="10" y="37" class="fsub">A</text><rect x="150" y="25" width="100" height="16" rx="4" class="fbox"/>' +
+              '<text x="10" y="75" class="fsub">B</text><rect x="50" y="63" width="100" height="16" rx="4" class="fbox"/>' +
+              '<path d="M150,33 L150,69" class="fline" marker-end="url(#seq-arrow)"/>' +
+              '<text x="155" y="98" class="fnote">A 開始 → B 才能完成</text>' +
+            '</g>' +
+            '</svg>',
+          points: [
           ["CPM 要徑法 vs PERT 計畫評核術", "CPM 用單時估算法、以經驗數據為基礎，適合確定性較高的專案；PERT 用三點估算法，適合高不確定性、複雜度高的專案。", 1, [
             ["CPM 要徑法", "以經驗數據為基礎的單時估算，找出工期最長、浮時為零的路徑。"],
             ["PERT 計畫評核術", "用樂觀、最可能、悲觀三個時間加權估算，適合風險與不確定性高的專案。"]
@@ -628,7 +700,23 @@
     {
       name: "專案執行（Executing）", short: "執行", count: 130, key: "c4",
       subtopics: [
-        { name: "團隊發展與組織行為", points: [
+        { name: "團隊發展與組織行為",
+          diagram: '<svg viewBox="0 0 640 132" role="img" aria-label="團隊發展五階段時序圖">' +
+            '<defs><marker id="tm-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--u-color)"/></marker></defs>' +
+            '<text x="320" y="10" class="fnote">Tuckman 團隊發展模型</text>' +
+            '<rect x="4" y="20" width="94" height="42" rx="8" class="fbox"/><text x="51" y="38" class="flabel">組建</text><text x="51" y="52" class="fsub">Forming</text>' +
+            '<line x1="98" y1="41" x2="122" y2="41" class="fline" marker-end="url(#tm-arrow)"/>' +
+            '<rect x="126" y="20" width="94" height="42" rx="8" class="fbox"/><text x="173" y="38" class="flabel">風暴</text><text x="173" y="52" class="fsub">Storming</text>' +
+            '<line x1="220" y1="41" x2="244" y2="41" class="fline" marker-end="url(#tm-arrow)"/>' +
+            '<rect x="248" y="20" width="94" height="42" rx="8" class="fbox"/><text x="295" y="38" class="flabel">正軌</text><text x="295" y="52" class="fsub">Norming</text>' +
+            '<line x1="342" y1="41" x2="366" y2="41" class="fline" marker-end="url(#tm-arrow)"/>' +
+            '<rect x="370" y="20" width="94" height="42" rx="8" class="fbox"/><text x="417" y="38" class="flabel">展現</text><text x="417" y="52" class="fsub">Performing</text>' +
+            '<line x1="464" y1="41" x2="488" y2="41" class="fline" marker-end="url(#tm-arrow)"/>' +
+            '<rect x="492" y="20" width="94" height="42" rx="8" class="fbox"/><text x="539" y="38" class="flabel">解散</text><text x="539" y="52" class="fsub">Adjourning</text>' +
+            '<path d="M14,120 C120,120 120,80 230,80 S380,88 630,72" class="fline fdash"/>' +
+            '<text x="320" y="129" class="fnote">團隊效能隨階段推進而提升，解散時任務／專案已結束</text>' +
+            '</svg>',
+          points: [
           ["團隊發展五階段", "組建（Forming）、風暴（Storming）、正軌（Norming）、展現（Performing）、解散（Adjourning），是執行大類最高頻的考點之一。", 1, [
             ["組建 Forming", "團隊剛成立，成員彼此陌生、依賴指示行事。"],
             ["風暴 Storming", "團隊開始出現意見衝突與競爭，磨合最劇烈的階段。"],
@@ -674,7 +762,21 @@
           ]],
           ["品質保證的產出", "組織流程資產更新、請求變更、建議的矯正行動，不含「品質管理計畫」本身（那是規劃階段的產出）。", 0]
         ]},
-        { name: "採購執行", points: [
+        { name: "採購執行",
+          diagram: '<svg viewBox="0 0 700 118" role="img" aria-label="採購管理五流程時序圖">' +
+            '<defs><marker id="pc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--u-color)"/></marker></defs>' +
+            '<rect x="4" y="20" width="128" height="42" rx="8" class="fbox"/><text x="68" y="46" class="flabel">規劃採購</text>' +
+            '<line x1="132" y1="41" x2="154" y2="41" class="fline" marker-end="url(#pc-arrow)"/>' +
+            '<rect x="158" y="20" width="128" height="42" rx="8" class="fbox"/><text x="222" y="46" class="flabel">邀商</text>' +
+            '<line x1="286" y1="41" x2="308" y2="41" class="fline" marker-end="url(#pc-arrow)"/>' +
+            '<rect x="312" y="20" width="128" height="42" rx="8" class="fbox hi"/><text x="376" y="46" class="flabel">執行採購</text>' +
+            '<line x1="440" y1="41" x2="462" y2="41" class="fline" marker-end="url(#pc-arrow)"/>' +
+            '<rect x="466" y="20" width="128" height="42" rx="8" class="fbox"/><text x="530" y="46" class="flabel">控制採購</text>' +
+            '<line x1="594" y1="41" x2="616" y2="41" class="fline" marker-end="url(#pc-arrow)"/>' +
+            '<rect x="620" y="20" width="76" height="42" rx="8" class="fbox"/><text x="658" y="40" class="flabel">結束</text><text x="658" y="55" class="flabel">採購</text>' +
+            '<text x="376" y="80" class="fcallout">★ 本子主題對應這一步</text>' +
+            '</svg>',
+          points: [
           ["採購管理五流程", "規劃採購管理 → 邀商（Request Seller Response）→ 執行採購（Conduct Procurements）→ 控制採購 → 結束採購，執行大類主要對應中間的「執行採購」。", 0],
           ["執行採購的 ITTO", "投入含採購管理計畫書、採購文件、合格賣方清單；工具技術含投標人會議、廣告、採購談判；產出含合約、選定賣方。", 1, [
             ["投入：合格賣方清單", "已通過初步篩選、符合資格的潛在賣方名單。"],
@@ -715,7 +817,20 @@
           ["控制品質常用工具技術", "流程圖、查檢表、統計抽樣等七大品質工具，不含「獲准之變更申請審查」（那屬於整合變更控制的範疇）。", 0],
           ["柏拉圖法則（80/20 法則）", "80% 問題的產生可歸責於 20% 的缺失原因，常直接考「這個原理稱為下列哪一項」。", 1]
         ]},
-        { name: "時程與成本控制", points: [
+        { name: "時程與成本控制",
+          diagram: '<svg viewBox="0 0 500 168" role="img" aria-label="EVM三大量測值比較圖">' +
+            '<text x="250" y="12" class="fnote">範例：進度落後且超支的專案（實務上三者高低會依實際狀況變動）</text>' +
+            '<line x1="20" y1="140" x2="480" y2="140" class="fline"/>' +
+            '<rect x="60" y="40" width="70" height="100" fill="var(--u-color)" fill-opacity="0.85" class="fbar"/>' +
+            '<rect x="215" y="75" width="70" height="65" fill="var(--u-color)" fill-opacity="0.45" class="fbar"/>' +
+            '<rect x="370" y="55" width="70" height="85" fill="var(--accent-ring)" fill-opacity="0.7" class="fbar"/>' +
+            '<text x="95" y="152" class="flabel">PV</text><text x="95" y="164" class="fsub">計畫值</text>' +
+            '<text x="250" y="152" class="flabel">EV</text><text x="250" y="164" class="fsub">實獲值</text>' +
+            '<text x="405" y="152" class="flabel">AC</text><text x="405" y="164" class="fsub">實際成本</text>' +
+            '<text x="250" y="28" class="fcallout">EV 低於 PV → 時程落後（SV為負）</text>' +
+            '<text x="250" y="42" class="fcallout">EV 低於 AC → 成本超支（CV為負）</text>' +
+            '</svg>',
+          points: [
           ["控制時程的正確步驟", "分析時程以決定是否採行校正行動、決定所要採行的特定校正行動、修正計畫並併入校正行動——不包含「更換專案團隊」這種過度反應。", 0],
           ["EVM 三大基本量", "計畫值 PV（目前為止應完成多少工作）、實獲值 EV（目前多少工作已完成）、實際成本 AC（實際花費多少），是成本控制的計算基礎。", 1, [
             ["計畫值 PV", "截至目前為止，依計畫應完成的工作價值。"],
@@ -899,10 +1014,16 @@
     grid.className = "subgrid";
     cat.subtopics.forEach(function (sub) {
       var card = document.createElement("div");
-      card.className = "subcard";
+      card.className = "subcard" + (sub.diagram ? " has-diagram" : "");
       var h3 = document.createElement("h3");
       h3.textContent = sub.name;
       card.appendChild(h3);
+      if (sub.diagram) {
+        var diagramWrap = document.createElement("div");
+        diagramWrap.className = "diagram";
+        diagramWrap.innerHTML = sub.diagram;
+        card.appendChild(diagramWrap);
+      }
       var ul = document.createElement("ul");
       sub.points.forEach(function (p) {
         var terms = p[3];
