@@ -1,0 +1,1123 @@
+<title>專案管理概論V3備課大綱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    color-scheme: light;
+    --surface:     #f9f9f7;
+    --card:        #fcfcfb;
+    --ink:         #0b0b0b;
+    --ink-2:       #52514e;
+    --ink-muted:   #898781;
+    --hairline:    #e1e0d9;
+    --border:      rgba(11,11,11,0.10);
+    --accent-ring: #c23a3a;
+    --accent-bg:   #fbeceb;
+
+    /* 8 個分類色 slot——固定順序使用（cat.key = "c1","c2"...），不要重排。
+       課程大類數量若超過 8，額外的類別要自己再加 c9、c10... 並補齊 tint／dark。 */
+    --c1: #2a78d6; --c1-tint: #eaf1fb;
+    --c2: #d1592a; --c2-tint: #fbeee7;
+    --c3: #14966a; --c3-tint: #e7f5ef;
+    --c4: #b8860a; --c4-tint: #faf3df;
+    --c5: #c14a78; --c5-tint: #fbedf2;
+    --c6: #2f7a2f; --c6-tint: #edf5ec;
+    --c7: #5b4ea3; --c7-tint: #eeecf9;
+    --c8: #4d6b80; --c8-tint: #eaf0f3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --surface:     #0d0d0d;
+      --card:        #1a1a19;
+      --ink:         #ffffff;
+      --ink-2:       #c3c2b7;
+      --ink-muted:   #898781;
+      --hairline:    #2c2c2a;
+      --border:      rgba(255,255,255,0.12);
+      --accent-ring: #e66767;
+      --accent-bg:   #2a1615;
+
+      --c1: #3987e5; --c1-tint: #14202f;
+      --c2: #d95926; --c2-tint: #2a1c10;
+      --c3: #199e70; --c3-tint: #0f2620;
+      --c4: #c98500; --c4-tint: #2a2110;
+      --c5: #d55181; --c5-tint: #2a151e;
+      --c6: #3fb53f; --c6-tint: #142616;
+      --c7: #9085e9; --c7-tint: #1c1930;
+      --c8: #8fa3b8; --c8-tint: #16222a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface:     #0d0d0d;
+    --card:        #1a1a19;
+    --ink:         #ffffff;
+    --ink-2:       #c3c2b7;
+    --ink-muted:   #898781;
+    --hairline:    #2c2c2a;
+    --border:      rgba(255,255,255,0.12);
+    --accent-ring: #e66767;
+    --accent-bg:   #2a1615;
+
+    --c1: #3987e5; --c1-tint: #14202f;
+    --c2: #d95926; --c2-tint: #2a1c10;
+    --c3: #199e70; --c3-tint: #0f2620;
+    --c4: #c98500; --c4-tint: #2a2110;
+    --c5: #d55181; --c5-tint: #2a151e;
+    --c6: #3fb53f; --c6-tint: #142616;
+    --c7: #9085e9; --c7-tint: #1c1930;
+    --c8: #8fa3b8; --c8-tint: #16222a;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  }
+  h1, h2, h3 { font-family: "Noto Serif TC", "Noto Sans TC", serif; }
+
+  a { color: inherit; }
+
+  /* ---------- Top bar ---------- */
+  #topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in oklab, var(--card) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .topbar-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .brand { display: flex; flex-direction: column; gap: 1px; margin-right: 6px; }
+  .brand .name { font-size: 15px; font-weight: 900; font-family: "Noto Serif TC", serif; }
+  .brand .sub { font-size: 11px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+
+  .search-wrap { position: relative; flex: 1 1 180px; min-width: 140px; max-width: 260px; }
+  .search-wrap input {
+    width: 100%;
+    padding: 7px 12px 7px 30px;
+    border-radius: 8px;
+    border: 1px solid var(--hairline);
+    background: var(--surface);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+  }
+  .search-wrap input:focus { border-color: var(--c1); }
+  .search-wrap svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); opacity: 0.5; pointer-events: none; }
+
+  .toolbtn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 12px; border-radius: 8px;
+    border: 1px solid var(--hairline);
+    background: var(--surface); color: var(--ink-2);
+    font-family: inherit; font-size: 12.5px; font-weight: 500;
+    cursor: pointer; white-space: nowrap;
+  }
+  .toolbtn:hover { border-color: var(--ink-muted); color: var(--ink); }
+  .toolbtn.active { background: var(--accent-bg); border-color: var(--accent-ring); color: var(--accent-ring); }
+
+  .jumpnav { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+  .jumpchip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 9px; border-radius: 999px;
+    border: 1px solid var(--hairline);
+    background: var(--surface);
+    font-family: inherit;
+    font-size: 11.5px; font-weight: 700;
+    text-decoration: none;
+    color: var(--ink-2);
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .jumpchip .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .jumpchip:hover { border-color: var(--ink-muted); color: var(--ink); }
+  .jumpchip.active { background: var(--ink); border-color: var(--ink); color: var(--card); }
+  .jumpchip.active .dot { outline: 2px solid var(--card); outline-offset: 1px; }
+
+  /* ---------- Page ---------- */
+  #page { max-width: 980px; margin: 0 auto; padding: 28px 24px 80px; }
+
+  .hero { margin-bottom: 26px; }
+  .hero .eyebrow {
+    font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-muted); margin-bottom: 8px;
+  }
+  .hero h1 { font-size: 26px; font-weight: 900; margin: 0 0 8px; line-height: 1.3; text-wrap: balance; }
+  .hero p { font-size: 14px; color: var(--ink-2); line-height: 1.8; max-width: 62ch; margin: 0; }
+
+  /* ---------- Weight table ---------- */
+  .plan-table {
+    margin-top: 22px;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--card);
+  }
+  .plan-row {
+    display: grid;
+    grid-template-columns: 22px 1.4fr 62px 78px 62px 58px 78px;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--hairline);
+    font-size: 12.5px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .plan-row:first-child { border-top: none; background: color-mix(in oklab, var(--ink) 4%, var(--card)); font-weight: 700; color: var(--ink-muted); font-size: 11px; letter-spacing: .03em; }
+  .plan-row:not(:first-child):hover { background: color-mix(in oklab, var(--ink) 3%, var(--card)); }
+  .plan-row .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .plan-row .name { font-weight: 700; }
+  .plan-row .num { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink-2); }
+  .plan-row .hours-cell { font-weight: 700; color: var(--ink); }
+  .plan-row:first-child .hours-cell { font-weight: 700; color: var(--ink-muted); }
+  .weightbar { grid-column: 1 / -1; height: 6px; border-radius: 4px; background: var(--hairline); overflow: hidden; margin: 0 16px 12px; display: flex; }
+  .weightbar span { height: 100%; }
+
+  .hours-wrap {
+    display: flex; align-items: center; gap: 8px;
+    margin: 18px 0 -6px;
+    font-size: 12.5px; color: var(--ink-2);
+  }
+  .hours-wrap input {
+    width: 64px;
+    padding: 5px 8px;
+    border-radius: 7px;
+    border: 1px solid var(--hairline);
+    background: var(--card);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 12.5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .hours-wrap input:focus { outline: none; border-color: var(--c1); }
+
+  /* ---------- Unit sections ---------- */
+  .unit {
+    margin-top: 44px;
+    scroll-margin-top: 84px;
+  }
+  .unit-head {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    padding-bottom: 14px; margin-bottom: 18px;
+    border-bottom: 3px solid var(--u-color);
+  }
+  .unit-head .idx {
+    font-family: "Noto Serif TC", serif;
+    font-size: 13px; font-weight: 700; color: var(--u-color);
+    border: 1.5px solid var(--u-color); border-radius: 50%;
+    width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+    flex: none;
+  }
+  .unit-head h2 { font-size: 20px; font-weight: 900; margin: 0; flex: 1 1 auto; min-width: 200px; }
+  .unit-meta { font-size: 12px; color: var(--ink-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .unit-copy {
+    border: 1px solid var(--hairline); background: var(--card); color: var(--ink-2);
+    border-radius: 7px; padding: 5px 10px; font-size: 11.5px; cursor: pointer; font-family: inherit;
+  }
+  .unit-copy:hover { border-color: var(--u-color); color: var(--u-color); }
+
+  .subgrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .unit.single .subgrid { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 900px) { .unit.single .subgrid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 700px) { .subgrid, .unit.single .subgrid { grid-template-columns: 1fr; } }
+
+  .back-to-overview {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-muted);
+    background: none;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0 0 16px;
+  }
+  .back-to-overview:hover { color: var(--ink); }
+  body.tab-single .back-to-overview { display: inline-flex; }
+  body.tab-single #plan-table, body.tab-single .hero, body.tab-single .hours-wrap { display: none; }
+
+  .subcard {
+    background: var(--u-tint);
+    border: 1px solid color-mix(in oklab, var(--u-color) 30%, var(--hairline));
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .subcard h3 {
+    font-size: 13.5px; font-weight: 700; margin: 0 0 10px;
+    color: var(--ink);
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  .subcard ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .subcard li { font-size: 12.5px; line-height: 1.6; color: var(--ink-2); }
+  .subcard li b { color: var(--ink); font-weight: 700; }
+  .subcard li .star { color: var(--accent-ring); margin-right: 2px; }
+  .subcard li.hot { background: var(--accent-bg); margin: 0 -8px; padding: 4px 8px; border-radius: 6px; }
+
+  .pt-row { position: relative; }
+  .subcard li.expandable { cursor: pointer; }
+  .subcard li.expandable:hover .pt-row { background: color-mix(in oklab, var(--u-color) 8%, transparent); }
+  .subcard li.expandable:focus-visible { outline: 2px solid var(--u-color); outline-offset: 2px; border-radius: 5px; }
+  .subcard li.expandable .pt-row {
+    padding: 2px 44px 2px 4px;
+    margin: -2px -4px;
+    border-radius: 6px;
+  }
+  .expand-mark {
+    position: absolute; right: 0; top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex; align-items: center; gap: 3px;
+    color: var(--u-color);
+    background: color-mix(in oklab, var(--u-color) 14%, transparent);
+    border-radius: 999px;
+    padding: 1px 7px 1px 6px;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .expand-mark .chev { display: inline-block; transition: transform 0.15s ease; }
+  .subcard li.expanded .expand-mark .chev { transform: rotate(180deg); }
+
+  .subcard li .sub-terms {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 8px 0 2px 12px;
+    border-left: 2px solid color-mix(in oklab, var(--u-color) 45%, var(--hairline));
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .subcard li.expanded .sub-terms { display: flex; }
+  .subcard .sub-terms li { font-size: 12px; color: var(--ink-2); cursor: default; }
+  .subcard .sub-terms li b { color: var(--u-color); font-weight: 700; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .expand-mark { transition: transform 0.15s ease; }
+  }
+
+  li.pt-dim { opacity: 0.28; }
+  li.pt-match { outline: 2px solid var(--c1); outline-offset: 2px; border-radius: 5px; }
+
+  #no-results { display: none; text-align: center; color: var(--ink-muted); font-size: 13px; padding: 60px 0; }
+
+  footer {
+    max-width: 980px; margin: 40px auto 0; padding: 20px 24px 40px;
+    border-top: 1px solid var(--hairline);
+    font-size: 11.5px; color: var(--ink-muted); line-height: 1.9;
+  }
+
+  @media print {
+    #topbar { position: static; }
+    .jumpnav, .search-wrap, #btn-hot, #btn-copyall, .unit-copy, #btn-expand-terms, .hours-wrap { display: none !important; }
+    .expand-mark { display: none !important; }
+    .subcard li .sub-terms { display: flex !important; }
+    body { background: #fff; color: #000; }
+    body.tab-single #plan-table, body.tab-single .hero, body.tab-single .hours-wrap { display: none; }
+  }
+
+  @media (max-width: 860px) {
+    .legend { margin-left: 0; }
+  }
+</style>
+
+<div id="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="name" id="brand-name">備課大綱</div>
+      <div class="sub" id="stat-line">載入中…</div>
+    </div>
+    <div class="search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" type="text" placeholder="搜尋知識點、專有名詞…" autocomplete="off">
+    </div>
+    <button class="toolbtn" id="btn-hot">★ 只看易混淆重點</button>
+    <button class="toolbtn" id="btn-expand-terms">▾ 展開全部名詞說明</button>
+    <button class="toolbtn" id="btn-copyall">複製全部大綱</button>
+    <nav class="jumpnav" id="jumpnav"></nav>
+  </div>
+</div>
+
+<div id="page">
+  <button class="back-to-overview" id="btn-back">← 回總覽</button>
+  <div class="hero">
+    <div class="eyebrow" id="hero-eyebrow">備課參考</div>
+    <h1 id="hero-title">把題庫整理成可以直接拿去排課的大綱</h1>
+    <p id="hero-desc"></p>
+  </div>
+
+  <div class="hours-wrap">
+    <label for="hours-input">總授課時數</label>
+    <input type="number" id="hours-input" min="0" step="0.5" placeholder="例如 18">
+    <span>小時 → 下表自動換算各單元建議時數</span>
+  </div>
+  <div class="plan-table" id="plan-table"></div>
+
+  <div id="units"></div>
+  <div id="no-results">沒有符合「<span id="no-results-q"></span>」的知識點</div>
+
+  <footer id="page-footer"></footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // =================================================================
+  // 1) CONFIG — 每個課程只需要改這裡 + 下面的 DATA，其他都是共用邏輯
+  // =================================================================
+  var CONFIG = {
+    pageTitle: "專案管理概論V3備課大綱",              // <title> 與左上角小字
+    courseName: "【TQC】專案管理概論V3",              // 完整課程名稱，會出現在頁首小字
+    courseCode: "FF324",           // export_questions.py 的 COURSES[key].value
+    heroTitle: null,                                 // null = 自動用「把 N 題題庫，整理成可以直接拿去排課的大綱」
+    heroDesc: null,                                  // null = 自動生成，見下方 buildHeroDesc()
+    sourceNote: "CSF 雲端練功坊「專案管理概論V3」練習題庫" // 頁尾資料來源說明
+  };
+
+  // =================================================================
+  // 2) DATA — 課程知識點內容，照這個 schema 填
+  // =================================================================
+  //
+  // DATA = [ category, category, ... ]   // 大類，對應網站「特定領域練習」清單
+  //
+  // category = {
+  //   name:  "大類全名",
+  //   short: "大類簡稱（4字內，給分頁按鈕用，避免自動截字切到一半）",
+  //   count: 62,          // 這個大類的實際題數（跟 export_questions.py discover 出來的一致）
+  //   key:   "c1",        // c1~c8，依序用，不要跳號、不要重複（用來對應 CSS 顏色 slot）
+  //   subtopics: [ subtopic, subtopic, ... ]
+  // }
+  //
+  // subtopic = {
+  //   name: "子主題名稱",
+  //   points: [ point, point, ... ]
+  // }
+  //
+  // point = [ label, desc, hot, terms? ]
+  //   label : string   — 知識點標籤，8~15字內，適合當卡片粗體標題
+  //   desc  : string   — 一句話完整說明（含考點方向、易混淆提醒）
+  //   hot   : 0 | 1     — 1 = 題庫裡明確標示為易混淆／高頻考點，卡片會標★＋紅框
+  //   terms : 可省略。當這個知識點其實是「一句話塞好幾個專有名詞」時
+  //           （例如「PPC/CPC vs CPM vs CPA/CPS」），把每個名詞拆開列成
+  //           [[術語, 完整解釋], [術語, 完整解釋], ...]，頁面上會變成可
+  //           點擊展開的清單。判斷標準：desc 裡如果出現 2 個以上帶自己
+  //           定義的縮寫/專有名詞，就該拆成 terms，不要全部塞在一句話裡。
+  //
+  // === 品質要求（做完一定要做，不要省略）===
+  // A. 每個 category 的 points 要「逐題比對過原始 PDF 題目全文」，不能只憑
+  //    子主題標題腦補。摘要時最容易漏掉的是：選擇題裡「正確答案以外的
+  //    干擾選項」也常是獨立考點（例如 CNN/RNN/LSTM 對比題，正解只提
+  //    CNN vs RNN，但 GAN、Transformer 當幹擾選項也會被學生考到）。
+  // B. 建議流程：先用 fork 逐大類讀 PDF 文字整理出知識架構 → 再用第二輪
+  //    fork「稽核」比對「知識架構」跟「原始題目全文」找遺漏 → 把遺漏補
+  //    進 DATA。兩輪都做，不要只做第一輪就上線。詳細步驟見同資料夾
+  //    「製作流程.md」。
+  // C. count（大類題數）跟 export_questions.py discover 出來的數字要一致，
+  //    不要用「points.length」湊數——points 是知識點數，不是題數。
+
+  var DATA = [
+    {
+      name: "專案管理基本概念", short: "基本概念", count: 60, key: "c1",
+      subtopics: [
+        { name: "專案基本定義與特性", points: [
+          ["專案四大特性", "暫時性、獨特性、逐步完善、資源與成本限制，是判斷「這是不是專案」的核心依據。", 1, [
+            ["暫時性 Temporary", "有明確的開始與結束日期，不會無限期進行；結束不代表短期，只代表有終點。"],
+            ["獨特性 Unique", "每個專案的產出（產品/服務/結果）都獨一無二，即使類似的專案本質仍不同。"],
+            ["逐步完善 Progressive Elaboration", "專案的特性和細節隨時間推進、資訊漸增而逐步發展、持續精確化。"],
+            ["資源與成本限制", "任何專案都受限於預算與可用資源，不可能無限投入。"]
+          ]],
+          ["專案 vs 日常工作", "專案是暫時性、獨特性；日常工作（Operation）是持續性、重複性的程序性工作，這組對比常被拿來出「差異在哪」的題。", 1],
+          ["專案的四大限制條件", "範疇、時間、成本、品質彼此牽動，規劃時要平衡取捨，這四項也是常見的專案限制條件考點。", 0],
+          ["專案成功的必要條件", "如期完成、滿足顧客需求是必要條件；「使用最少資源」「改變企業文化」不是判斷成功與否的必要依據。", 1],
+          ["專案的產出可以是什麼", "產品、服務或結果都算專案產出，不限於實體產品，也可以是報告或里程碑。", 0],
+          ["專案的正式定義", "「為創建一獨特的產品、服務或結果所做的一次性努力」是專案最正式的定義句型，常整句考選擇題。", 0]
+        ]},
+        { name: "五大流程群組", points: [
+          ["五大流程群組", "起始、規劃、執行、監視及控制、結束，是專案管理知識體系的骨架，幾乎每個知識領域都會對應到其中幾個群組。", 1, [
+            ["起始 Initiating", "正式確認專案或階段的存在並授權開始，主要產出是發展專案章程。"],
+            ["規劃 Planning", "確定範疇、精進目標，擬定達成目標所需的行動方案與計畫書。"],
+            ["執行 Executing", "完成專案管理計畫中界定的工作，把計畫付諸行動、符合專案規格。"],
+            ["監視及控制 Monitoring and Controlling", "追蹤、審查與調整專案進度績效，識別需要的變更並發起。"],
+            ["結束 Closing", "正式結束專案、階段或合約的所有活動，含行政結束與合約結束。"]
+          ]],
+          ["各流程群組的關聯性考點", "與目標、時程、預算關係最密切的是「規劃」；與變更關係最密切的是「監視及控制」；把計畫付諸行動屬於「執行」。", 1],
+          ["贊助者影響力最大的階段", "利害關係人（尤其贊助者）的影響力在專案「起始」階段最大，隨專案進行逐漸遞減。", 1],
+          ["專案成本花費最多的階段", "絕大多數的專案成本會在「執行」階段被花費掉，這點常跟「起始/規劃階段不確定性最高」放在一起考。", 1]
+        ]},
+        { name: "組織結構類型", points: [
+          ["五種組織結構光譜", "從功能式到專案式，中間夾著弱矩陣/平衡矩陣/強矩陣，PM 的職權大小隨光譜遞增，是這個大類的核心考點。", 1, [
+            ["功能式 Functional", "依專業分組，PM 幾乎無正式職權，員工向單一功能經理負責、指揮系統清楚。"],
+            ["弱矩陣 Weak Matrix", "PM 角色接近協調者／促進者（Expediter），權力小，仍受制於功能經理。"],
+            ["平衡矩陣 Balanced Matrix", "PM 與功能經理權力相當，資源需雙方協調分配。"],
+            ["強矩陣 Strong Matrix", "PM 有實質權力，但團隊成員仍同時向功能經理報告，易生雙重忠誠問題。"],
+            ["專案式 Projectized", "PM 擁有最大獨立性與職權，大部分資源用於專案工作，團隊常同地辦公。"]
+          ]],
+          ["功能式組織的特徵", "以專業為重心、依功能分組，所有員工向一位經理報告、指揮系統清楚，但專案工作不是重心，跨部門溝通協調較差。", 0],
+          ["專案式組織的優缺點", "優點是 PM 權限最大、資源集中易於管理；缺點是專案結束後人員何去何從的問題、整體成本較高。", 1],
+          ["矩陣式組織的雙重報告問題", "團隊成員同時向 PM 與功能經理負責，容易產生資源使用衝突與部分人員雙重忠誠的問題。", 1],
+          ["PM 權力大小的關鍵決定因素", "組織結構類型是決定 PM 權力大小的關鍵因素，不是 PM 個人的溝通技巧或員工配合度。", 1]
+        ]},
+        { name: "專案管理知識體系與治理", points: [
+          ["專案治理架構的重要元素", "含專案成功及交付的允收準則、決策流程、專案團隊與外部利害關係人的關係；不包含「專案的可行性分析」（那是起始前的事）。", 1],
+          ["企業環境因素 EEF", "指組織文化、過去執行類似專案的經驗、人事制度、既有 ERP 系統等——不是專案團隊能控制、但會影響專案的外部條件，是多數規劃子流程的投入。", 1],
+          ["專案管理應用知識的三面向", "一般管理知識＋應用領域知識＋工具技術與方法，並非只靠專案管理軟體或純理論、也不能忽略實務經驗。", 0]
+        ]},
+        { name: "專案組合與計畫管理", points: [
+          ["Project／Program／Portfolio 三層級", "組合（Portfolio）統籌多個計畫與專案以達成組織策略目標；計畫（Program）管理彼此緊密相依的多個專案；專案（Project）是最小的一次性努力單位。", 1, [
+            ["專案 Project", "為創建一獨特的產品、服務或結果所做的一次性努力。"],
+            ["計畫 Program", "管理多個彼此有緊密相依關係、協調一致的相關專案，以獲得單獨管理無法取得的效益。"],
+            ["組合 Portfolio", "將專案、計畫及其他工作分組，以有效管理達成策略目標，各項目間不一定緊密相依。"]
+          ]],
+          ["專案管理辦公室 PMO", "負責跨專案的組合管理、專案評選與組織策略排序，常出現在「主管正評估多個與策略目標相關的專案」情境題。", 0],
+          ["專案組合管理的內容", "建立投資策略、評價專案的優先順序、建立可實現投資目標的組合——不含消費者研究這種單一專案層級的作業。", 0]
+        ]}
+      ]
+    },
+    {
+      name: "專案起始（Initiating）", short: "起始", count: 20, key: "c2",
+      subtopics: [
+        { name: "起始流程核心文件", points: [
+          ["三大核心文件", "工作說明書（SOW）、專案章程（Charter）、產品說明書，是起始階段考最密集的三份文件，容易混淆彼此的撰寫者與用途。", 1, [
+            ["工作說明書 SOW", "敘述專案承諾要完成的產品或服務，通常由需求者、業主或委託人撰寫。"],
+            ["專案章程 Project Charter", "正式核准並授權 PM 在專案活動中動用組織資源的文件，用來確認專案的存在。"],
+            ["產品說明書", "說明產品或服務特性及專案早期細節的一項投入（Input），不是產出。"]
+          ]],
+          ["SOW 由誰撰寫", "通常由需求者、業主或委託人提供，而不是 PM 或專案贊助者自己寫。", 0],
+          ["章程的核心目的", "確認專案目標並授權取得專案資源、確認專案的存在，不是「敘述專案的評選方法」。", 1],
+          ["章程產生於哪個流程群組", "專案章程在「起始（Initiating）」流程群組中產生。", 0],
+          ["確認專案存在的文件", "是專案章程，而不是 WBS、預算基準或整體專案計畫。", 1]
+        ]},
+        { name: "發展專案章程", points: [
+          ["發展專案章程的四項投入", "工作說明書、專案評選方法、企業環境及資源、組織流程，四項合併出題的機率很高。", 1, [
+            ["工作說明書 SOW", "敘述專案承諾完成的產品或服務。"],
+            ["專案評選方法", "如本益比分析等，用來判斷是否啟動這個專案。"],
+            ["企業環境及資源", "組織既有的環境條件與可用資源。"],
+            ["組織流程", "組織既有的流程與制度規範。"]
+          ]],
+          ["章程可能的內容", "常見的是總體預算、PM 人選、專案目的，「專案經驗」不是章程正式會納入的內容。", 0],
+          ["PM 指派的最佳時機", "理想狀況下 PM 應該在章程階段就被指定，越早介入越能掌握專案全貌。", 0]
+        ]},
+        { name: "利害關係人識別與分析", points: [
+          ["利害關係人的定義範圍", "受專案活動影響、或能影響專案的個人與團體都算，範圍很廣——贊助者、顧客、供應商、決策階層都可能是。", 0],
+          ["利害關係人分析的重點", "分析利害關係人的期望、影響力、與專案的接近程度（參與程度）；「社會及經濟狀況」不是分析重點。", 1],
+          ["對降低成本最關切的一方", "通常是贊助者或高階決策層／出資方，而非執行團隊本身。", 0],
+          ["蒐集需求後可先忽略的期望", "當關鍵利害關係人期望明確後，與專案目標無關或優先順序明顯較低的期望可以先忽略，需依重要性判斷取捨。", 0]
+        ]},
+        { name: "效益衡量與專案評選", points: [
+          ["本益比分析比較兩專案", "比較執行成本現值、利益現值、營運成本現值，算出淨獲利現值較高者優先推薦——是起始階段最常考的計算題型。", 1]
+        ]}
+      ]
+    },
+    {
+      name: "專案規劃（Planning）", short: "規劃", count: 130, key: "c3",
+      subtopics: [
+        { name: "品質規劃", points: [
+          ["品質定義的四種取向", "製造者導向、產品導向、消費者導向、價值導向，同一題常換句話問「哪一項不是」某取向的定義。", 1, [
+            ["製造者導向", "是否符合規格與需求（Conformance to Requirements）。"],
+            ["產品導向", "看產品本身具備的屬性與特性。"],
+            ["消費者導向", "適合使用（Fitness for Use），滿足顧客實際需求。"],
+            ["價值導向", "兼顧使用效益與售價，是最佳條件的組合。"]
+          ]],
+          ["戴明（Deming）的品質觀點", "改善製程、提高產品品質一致性、減少重工與浪費，不是「生產力是品質的副產品」這類敘述。", 0],
+          ["品質機能展開 QFD", "把消費者需求轉換為可測知的產品屬性，效果包含縮短總設計時間、降低試製成本，但不含「增加設計工程變更」。", 0],
+          ["規劃品質管理的產出", "品質管理計畫書、品質指標（Quality Metrics）、品質檢核表；「操作定義」不在這裡，那屬於控制品質的範疇。", 1],
+          ["專案式（任務編組）組織特性", "臨時性動態組織、資源可充分利用、易增加跨部門溝通機會，但也容易出現本位主義與雙重忠誠問題。", 0]
+        ]},
+        { name: "範疇與 WBS", points: [
+          ["範疇聲明書不包含的內容", "範疇聲明書（Scope Statement）不包含「成本估計」，成本估計屬於成本管理領域的另一份產出。", 1],
+          ["定義範疇（Define Scope）的產出", "產出是專案範疇說明書、專案文件更新，不含「成本變更」或「風險分析」。", 0],
+          ["建立 WBS 的四項投入", "範疇管理計畫書、專案範疇說明書、需求文件、組織流程資產，四項齊全才算完整投入。", 1, [
+            ["範疇管理計畫書", "規範如何定義、確認與控制專案範疇。"],
+            ["專案範疇說明書", "詳述專案範疇、主要交付標的與允收準則。"],
+            ["需求文件", "記錄利害關係人對專案的具體需求。"],
+            ["組織流程資產", "組織既有的範本、政策、歷史資料等。"]
+          ]],
+          ["WBS 最下層是工作包", "工作分解結構（WBS）最下層／最底層稱為工作包（Work Package），是有助於成本、時間估計與工作分派的最小管理單位。", 1],
+          ["定義活動（Define Activities）的產出", "產出是活動清單、活動屬性、里程碑清單，不含「請求的變更」。", 0, [
+            ["活動清單 Activity List", "列出所有需要完成的排程活動。"],
+            ["活動屬性 Activity Attributes", "描述每項活動的細節，如負責人、地點、限制等。"],
+            ["里程碑清單 Milestone List", "列出專案的重要時間點，是否為強制性里程碑也會標註。"]
+          ]]
+        ]},
+        { name: "時程規劃", points: [
+          ["CPM 要徑法 vs PERT 計畫評核術", "CPM 用單時估算法、以經驗數據為基礎，適合確定性較高的專案；PERT 用三點估算法，適合高不確定性、複雜度高的專案。", 1, [
+            ["CPM 要徑法", "以經驗數據為基礎的單時估算，找出工期最長、浮時為零的路徑。"],
+            ["PERT 計畫評核術", "用樂觀、最可能、悲觀三個時間加權估算，適合風險與不確定性高的專案。"]
+          ]],
+          ["PERT 三點估算公式", "期望值 =（樂觀時間 + 4 × 最可能時間 + 悲觀時間）÷ 6；標準差 =（悲觀時間 − 樂觀時間）÷ 6，是這個大類最常出現的計算題。", 1],
+          ["前導圖四種邏輯關係（AON）", "完成-開始（FS）最常用，其餘還有開始-開始（SS）、完成-完成（FF）、開始-完成（SF），要能分辨圖示對應哪一種。", 1, [
+            ["完成-開始 FS", "前一活動完成後，後一活動才能開始，最常用的邏輯關係。"],
+            ["開始-開始 SS", "前一活動開始後，後一活動才能開始。"],
+            ["完成-完成 FF", "前一活動完成後，後一活動才能完成。"],
+            ["開始-完成 SF", "前一活動開始後，後一活動才能完成，最少見。"]
+          ]],
+          ["要徑（Critical Path）的特性", "是網路圖中期程最長的路徑，路徑上活動的浮時（Float）為零，但活動的自由浮時不一定是零。", 0],
+          ["縮程法 vs 快速跟進", "縮程法（Crashing）通常需要增加成本／資源；快速跟進（Fast Tracking）讓活動平行進行、常會有重工（Rework）的情況發生。", 1, [
+            ["縮程法 Crashing", "增加資源投入以縮短工期，通常會增加成本。"],
+            ["快速跟進 Fast Tracking", "把原本前後相連的活動改成同時進行，常導致重工。"]
+          ]],
+          ["浮時（Float）為負的處置", "浮時 = −5 時代表已經落後於進度，最適宜的處置是使用資源撫平或趕工手段，而非放任不管。", 0]
+        ]},
+        { name: "成本估算與財務評估", points: [
+          ["三種財務評估方法", "淨現值 NPV、內部報酬率 IRR、還本期 Payback Period，是規劃階段最常考的專案遴選計算題型。", 1, [
+            ["淨現值 NPV", "現金流量折現後加總，選擇 NPV 最大的專案，假設以資金成本重複投資。"],
+            ["內部報酬率 IRR", "使 NPV 等於零的折現率，選擇 IRR 最高的專案。"],
+            ["還本期 Payback Period", "回收投資所需的時間，是最不精確的方法，因為不考慮金錢的時間價值。"]
+          ]],
+          ["成本估算的三種技術", "類比估算法（速度快、精度低）、由下而上估算法（精度高、耗時）、專家判斷，是規劃品質管理常用的工具技術之一。", 0],
+          ["學習曲線理論", "強調生產數量增加時，平均單位成本會下降，不是單純指「生產率上升時成本減少」。", 0],
+          ["成本基準 Cost Baseline", "是按時間分段的預算，用來衡量及監控專案整體績效，不等於專案的實際支出成本（Actual Cost）。", 1],
+          ["成本類別的區分", "固定成本、變動成本、直接成本、間接成本要能對應到具體情境，例如設備租賃通常算固定成本。", 0]
+        ]},
+        { name: "風險規劃", points: [
+          ["負面風險的四大應對策略", "規避（Avoidance）、轉移（Transfer）、減輕（Mitigation）、接受（Acceptance），是風險規劃最核心的分類考點。", 1, [
+            ["規避 Avoidance", "改變計畫以完全消除威脅或保護專案目標不受影響。"],
+            ["轉移 Transfer", "把風險的後果連同應對責任轉移給第三方，如購買保險。"],
+            ["減輕 Mitigation", "採取行動降低風險發生機率或衝擊程度。"],
+            ["接受 Acceptance", "不採取行動改變風險，除非風險真的發生才處理。"]
+          ]],
+          ["定性風險分析 vs 定量風險分析", "定性用機率與衝擊矩陣排定風險優先順序，產出風險分數；定量用統計數值（如蒙地卡羅模擬）量化風險對專案目標的整體衝擊。", 1, [
+            ["定性風險分析", "評估風險的機率和影響程度，排定風險的優先順序。"],
+            ["定量風險分析", "以數學模式或統計機率值，量化風險對專案整體目標的衝擊。"]
+          ]],
+          ["三種常見風險分析工具", "決策樹分析（找出決定因子）、龍捲風圖／敏感度分析（顯示資料敏感度）、蒙地卡羅模擬（以機率分布取代定值估算）。", 1, [
+            ["決策樹 Decision Tree", "用來輔助決策的圖形工具，找出影響決策的關鍵因子。"],
+            ["龍捲風圖 Tornado Diagram", "常用於顯示資料的敏感度分析結果。"],
+            ["蒙地卡羅模擬 Monte Carlo Simulation", "運用數學模式將成本或時程變數執行多次，以機率分布取代定值估算。"]
+          ]],
+          ["風險的三個特性", "事件之發生（機率）、事件發生對結果的影響（衝擊）、發生的不確定時間點，三者合稱風險的基本特性。", 0],
+          ["風險管理計畫書的角色", "是所有其餘規劃風險工作的投入（Input），內容含門檻值、評分與解釋方法、負責人、預算。", 0]
+        ]},
+        { name: "採購與人力資源規劃", points: [
+          ["合約類型與風險歸屬", "固定價格合約對買方風險最低、對賣方風險最高；成本補償類合約（成本加固定費用／加獎勵／加佣金）則相反。", 1, [
+            ["固定價格合約", "價格在簽約時就固定，買方風險最低、賣方需自行吸收超支風險。"],
+            ["成本加固定費用", "依實際成本支付並加上固定利潤，賣方風險較低。"],
+            ["成本加獎勵費用", "依成本支付並依績效給予獎勵，兼顧成本控制與誘因。"],
+            ["時間與材料合約 T&M", "依實際工時與材料計價，適合範疇不明確的小型工作。"]
+          ]],
+          ["人力資源規劃的投入與產出", "投入是企業環境因素、組織流程資產、專案管理計畫；產出是角色與責任、專案組織圖、人員管理計畫。", 1, [
+            ["投入：企業環境因素", "組織文化、現有人力資源與人事管理制度等外部條件。"],
+            ["投入：組織流程資產", "組織既有的範本與政策。"],
+            ["產出：專案組織圖", "顯示專案報告關係的圖表。"],
+            ["產出：人員管理計畫", "敘述人力資源如何及何時取得與釋出。"]
+          ]],
+          ["溝通管理計畫書的四項內容", "利害關係人的溝通需求、溝通目的與頻率、溝通格式與傳送方法、分發時間範圍與負責分發者。", 1],
+          ["規劃人力資源管理的正確敘述", "是確定、記錄並分派專案角色、職責和報告關係、制定人員管理計畫，而不是直接去招募人力（那是執行階段的工作）。", 0]
+        ]}
+      ]
+    },
+    {
+      name: "專案執行（Executing）", short: "執行", count: 130, key: "c4",
+      subtopics: [
+        { name: "團隊發展與組織行為", points: [
+          ["團隊發展五階段", "組建（Forming）、風暴（Storming）、正軌（Norming）、展現（Performing）、解散（Adjourning），是執行大類最高頻的考點之一。", 1, [
+            ["組建 Forming", "團隊剛成立，成員彼此陌生、依賴指示行事。"],
+            ["風暴 Storming", "團隊開始出現意見衝突與競爭，磨合最劇烈的階段。"],
+            ["正軌 Norming", "團隊發展出共同工作方式，開始建立信任與默契。"],
+            ["展現 Performing", "團隊發展出彼此的感情與熟悉，共同做決策、高效產出。"],
+            ["解散 Adjourning", "專案或階段結束，團隊完成任務後解散。"]
+          ]],
+          ["虛擬團隊 Virtual Team", "可以組建工作地點十分分散、但同屬一個組織的團隊，也可以納入行動不便或在家辦公的員工，用來降低差旅成本限制。", 0],
+          ["發展專案團隊的工具技術", "集中辦公（Co-location）、訓練（Training）、團隊建立活動、認可與獎勵系統，都是提升團隊凝聚力的常見手段。", 0],
+          ["溝通管道公式", "溝通管道數 = n(n-1)/2，團隊人數增加時常考「會增加多少溝通管道」的計算題。", 1],
+          ["資源撫平 vs 資源分派", "資源撫平（Resource Leveling）可能延長時程，但讓人力需求分布保持平穩；被迫資源分派通常代表人力需求過度集中在某階段。", 0],
+          ["X 理論 vs Y 理論", "Y 理論假設人不需要被持續監督、被預期是勤奮且自動自發；X 理論假設人沒有能力自主管理、經理需嚴格監控部屬履行職責。", 1, [
+            ["X 理論", "假設人天生厭惡工作、缺乏自主管理能力，需要嚴格監督與控制。"],
+            ["Y 理論", "假設人自動自發、能自我管理，只需要適度的激勵和期望。"]
+          ]]
+        ]},
+        { name: "領導、權力與衝突管理", points: [
+          ["五種權力基礎", "領袖權力（Referent）、專家權力（Expert）、合法權力（Legitimate）、獎勵權力（Reward）、強制權力（Coercive），常考「哪一種權力是因為受屬下高度尊敬」。", 1, [
+            ["領袖權力 Referent Power", "來自對領導者的高度尊敬與認同，屬下願意執行其決策。"],
+            ["專家權力 Expert Power", "來自 PM 本身的專業知識與技能。"],
+            ["合法權力 Legitimate Power", "來自組織正式授予的職位與職權。"],
+            ["獎勵權力 Reward Power", "來自 PM 能給予獎勵的能力。"],
+            ["強制權力 Coercive Power", "來自 PM 能施加懲罰的能力，長期使用易傷害團隊關係。"]
+          ]],
+          ["五種衝突解決模式", "問題解決／面對（Confronting）、妥協（Compromising）、退卻／擱置（Withdrawal）、安撫（Smoothing）、強迫（Forcing），是考最密集的衝突處理題型。", 1, [
+            ["問題解決 Confronting", "直接面對問題根源，尋求雙贏解法，一般認為是最有效的方式。"],
+            ["妥協 Compromising", "雙方各退一步，找到都能接受的折衷方案。"],
+            ["退卻 Withdrawal", "延後或迴避處理衝突，屬於消極手段。"],
+            ["安撫 Smoothing", "強調雙方的共同點、淡化差異，但不解決根本問題。"],
+            ["強迫 Forcing", "以權力壓制對方接受己方觀點，屬於「以我方案為準」的作法。"]
+          ]],
+          ["PM 領導風格隨團隊階段調整", "領導型態要配合團隊發展的不同階段，通常依「指導、訓練、支持、委派」的連續步驟調整。", 0],
+          ["新成員加入展現階段的影響", "團隊可能會短暫回到風暴（Storming）階段重新磨合，但通常能較快回到展現（Performing）階段。", 0],
+          ["溝通模式的過濾因素", "接收者會透過文化考量、情感、態度等因素過濾他們接收到的資訊，這是溝通失真的常見原因。", 0]
+        ]},
+        { name: "品質保證與稽核", points: [
+          ["執行品質保證常用工具技術", "品質稽核（Quality Audits）、流程分析（Process Analysis）是核心工具，不是合約文件或客戶訂購單這類文件本身。", 0],
+          ["品質稽核的目的", "判斷哪個專案流程無效率或無效果、改進流程、降低品質成本（COQ），並非只檢查交付標的正確性——那是控制品質的範疇。", 1],
+          ["品質成本理論的三位學者", "Deming、Juran、Crosby 的觀點常被放在一起考，尤其「85% 品質成本由管理問題造成」是誰的主張。", 1, [
+            ["Deming", "主張持續改善（PDCA），強調管理階層應對品質問題負最大責任。"],
+            ["Juran", "主張 85% 的品質成本皆由管理問題所造成，提出品質三部曲。"],
+            ["Crosby", "主張零缺點（Zero Defect）與「第一次就做對」。"]
+          ]],
+          ["品質保證的產出", "組織流程資產更新、請求變更、建議的矯正行動，不含「品質管理計畫」本身（那是規劃階段的產出）。", 0]
+        ]},
+        { name: "採購執行", points: [
+          ["採購管理五流程", "規劃採購管理 → 邀商（Request Seller Response）→ 執行採購（Conduct Procurements）→ 控制採購 → 結束採購，執行大類主要對應中間的「執行採購」。", 0],
+          ["執行採購的 ITTO", "投入含採購管理計畫書、採購文件、合格賣方清單；工具技術含投標人會議、廣告、採購談判；產出含合約、選定賣方。", 1, [
+            ["投入：合格賣方清單", "已通過初步篩選、符合資格的潛在賣方名單。"],
+            ["工具技術：投標人會議", "又稱承包商會議、供應商會議，確保各方對採購需求有清楚一致的理解。"],
+            ["工具技術：採購談判", "與潛在賣方協商合約條款與價格。"],
+            ["產出：選定賣方", "經過評估後最終選定的合約對象。"]
+          ]],
+          ["投標人會議的目的", "確保所有潛在賣方對本項採購目的（技術要求、合約要求等）都有清楚的共同理解，屬於執行採購的工具技術。", 0],
+          ["評估標準 Evaluation Criteria", "用來評比與評分建議書、挑選賣方流程的方法，屬於「請求賣方回應」流程的工具技術。", 0]
+        ]},
+        { name: "溝通與利害關係人管理", points: [
+          ["三種主要溝通方式", "書面（Written）、口頭（Verbal）、非口頭（Non-verbal），是溝通管理最基本的三分類，也常考哪一種不屬於正式口頭溝通。", 0, [
+            ["書面溝通", "以文字紀錄呈現，如報告、備忘錄、E-mail。"],
+            ["口頭溝通", "以語言直接表達，如會議、會談。"],
+            ["非口頭溝通", "透過肢體語言、語氣等非文字方式傳達訊息。"]
+          ]],
+          ["績效報告常用工具技術", "變異分析（Variance Analysis）、資訊散布、趨勢分析是核心工具，「績效評估」這種泛稱不算工具技術。", 0],
+          ["管理利害關係人參與的工具", "溝通方法、人際關係技巧、管理技巧，不含「專家判斷」（那屬於其他流程的工具）。", 0],
+          ["指導與管理專案執行 DMPW", "核心概念是資源在此階段投入、實行受指派的活動以產出專案產品或服務；產出含工作績效資訊、交付標的、變更請求。", 1]
+        ]},
+        { name: "人力資源獲得與管理", points: [
+          ["獲得專案團隊的主要目的", "確保取得完成專案工作所需的人力資源，是「獲得專案團隊 Acquire Project Team」流程的核心目的。", 0],
+          ["管理專案團隊常用工具技術", "觀察與談話、績效評估、衝突管理、人際關係技巧，是追蹤與提升團隊成員績效的核心方法。", 0],
+          ["選擇團隊成員的考量特性", "以前經驗、個人特質、個人興趣、可利用時間，是選才時應考量的特性；薪資不是這個流程要考量的重點特性。", 0],
+          ["團隊成員私人事務的歸屬", "例如醫療保險賠償這類私人問題，通常應由人力資源辦公室（Human Resources Office）負責，而不是 PM 親自處理。", 0]
+        ]}
+      ]
+    },
+    {
+      name: "專案監視及控制（Monitoring and Controlling）", short: "監視控制", count: 60, key: "c5",
+      subtopics: [
+        { name: "範疇與品質控制", points: [
+          ["確認範疇 vs 控制品質", "確認範疇（Validate Scope）著重交付物的「可接受性」，由客戶／贊助者正式驗收；控制品質著重交付物的「正確性」，一般發生在確認範疇之前。", 1, [
+            ["確認範疇 Validate Scope", "驗證交付標的，讓利害關係人正式接受工作成果，著重可接受性。"],
+            ["控制品質 Control Quality", "監控並記錄執行品質活動的結果，評估績效與建議必要變更，著重正確性。"]
+          ]],
+          ["確認範疇的四項投入", "專案管理計畫、交付標的、需求追溯矩陣、工作績效資料，四項齊全才是完整的投入。", 0],
+          ["控制品質常用工具技術", "流程圖、查檢表、統計抽樣等七大品質工具，不含「獲准之變更申請審查」（那屬於整合變更控制的範疇）。", 0],
+          ["柏拉圖法則（80/20 法則）", "80% 問題的產生可歸責於 20% 的缺失原因，常直接考「這個原理稱為下列哪一項」。", 1]
+        ]},
+        { name: "時程與成本控制", points: [
+          ["控制時程的正確步驟", "分析時程以決定是否採行校正行動、決定所要採行的特定校正行動、修正計畫並併入校正行動——不包含「更換專案團隊」這種過度反應。", 0],
+          ["EVM 三大基本量", "計畫值 PV（目前為止應完成多少工作）、實獲值 EV（目前多少工作已完成）、實際成本 AC（實際花費多少），是成本控制的計算基礎。", 1, [
+            ["計畫值 PV", "截至目前為止，依計畫應完成的工作價值。"],
+            ["實獲值 EV", "截至目前為止，實際已完成工作的價值。"],
+            ["實際成本 AC", "截至目前為止，完成工作實際花費的成本。"]
+          ]],
+          ["EVM 衍生指標與判讀", "成本變異 CV=EV−AC、時程變異 SV=EV−PV、成本績效指標 CPI=EV/AC；CPI>1 代表成本執行績效良好，是這個大類最常出現的計算與判讀題。", 1],
+          ["範疇潛變 Scope Creep", "未經正式變更程序而逐漸增加範疇，因應之道最重要的是嚴格執行整合變更控制，而不是事後補救。", 0],
+          ["較佳的專案報告週期", "傾向較短的報告週期，能更快發現偏差並及早採取校正行動。", 0]
+        ]},
+        { name: "變更與構型管理", points: [
+          ["整合變更控制的內容", "規定專案所有變更所應遵循的手續，包括書面申請、追蹤系統以及核准變更的審批級別，屬於整體變更控制過程的一部分。", 1],
+          ["變更控制委員會 CCB", "由專案利害關係人組成，專案的任何變更都應透過 CCB 審核，但決議內容仍需與客戶達成共識，不是「不需要與客戶達成共識」。", 1],
+          ["構型管理 Configuration Management", "用於確定專案產品／服務／結果的功能與實體特性符合需求規格的技術，涵蓋規劃、衡量與偵測過程的所有活動。", 0],
+          ["實施整合變更控制的投入", "專案管理計畫、工作績效報告、變更申請、專家判斷，不含「品質管理計畫」。", 0]
+        ]},
+        { name: "風險與採購監控", points: [
+          ["風險監控貫穿整個生命週期", "追蹤已識別的風險、監測殘餘風險、識別新風險、實施風險應對計畫並評估其有效性，這些活動貫穿整個專案生命週期。", 0],
+          ["發現未辨識風險的因應", "應主動採取額外的風險應對規劃，而不是被動採用繞道規劃（Walk Around Plans）當臨時措施。", 1],
+          ["控制採購的重要依據", "合約（Contract）是控制採購中保障買賣雙方權益最重要的依據，尤其是有多個供應商來源的大型專案。", 0],
+          ["供應商合作不佳的改善做法", "應進行採購稽核（Procurement Audit），並把經驗納入未來供應商評選、避免重蹈覆轍。", 0]
+        ]},
+        { name: "溝通與利害關係人控制", points: [
+          ["控制利害關係人參與的工具", "資訊管理系統、專家判斷、會議是核心工具技術，「合約」本身不算是這個流程的工具。", 0],
+          ["利害關係人參與效能降低時", "當利害關係人參與活動的效能與效率逐漸降低、進度受影響時，應特別著重「管理利害關係人參與」子流程。", 0],
+          ["績效報告差異分析重點", "與專案基準比較時，差異分析著重於成本差異及時程差異，而不是泛指的問題分析。", 0],
+          ["變更申請可能包含的依據", "工作績效資訊、專案管理計畫書、至今所有的會議記錄，都可能是提出變更申請時參考的依據。", 0]
+        ]}
+      ]
+    },
+    {
+      name: "專案結束（Closing）", short: "結束", count: 20, key: "c6",
+      subtopics: [
+        { name: "結案作業與管理結束", points: [
+          ["結案時應做的事", "依專案結案作業檢查清單查核、立即支付所有採購債務及帳單、設備材料規劃移轉、完成結案報告——不含「工作重分派」這種執行期活動。", 1],
+          ["管理結束程序的內容", "收集專案記錄、收集吸取的教訓（Lessons Learned）、分析專案成敗，不含「建置工作分解結構」這種規劃期活動。", 0],
+          ["文件歸檔編碼方式", "「依作業性質編碼」是常見的一種編碼方式，如「專案編號－大綱編號－細目序號－版本」。", 0],
+          ["結束專案或階段的投入", "專案管理計畫、企業環境因素、組織流程資產、已驗證過的交付標的，四項齊全才是完整投入。", 0]
+        ]},
+        { name: "結束採購", points: [
+          ["結束採購的產出", "組織流程資產更新、正式接受（Formal Acceptance）——以書面方式正式接受專案或採購的結果。", 0],
+          ["提早終止合約的可能原因", "雙方達成協議、買方或賣方違反合約內容、未預期的天災等，不包含「PM 不喜歡合約的買賣項目」這種主觀理由。", 0],
+          ["避免供應商合作不佳重演", "未來專案需要把供應商評選記錄、必要時列入黑名單，並落實採購稽核，納入日後的作業規範。", 0]
+        ]},
+        { name: "專案成功與結案評估", points: [
+          ["衡量專案真正成功的關鍵", "顧客的滿意度是比「如期、如質、如預算完成」更關鍵的最終判準，常考「哪一項要素最為關鍵」。", 1],
+          ["結案報告與經驗學習", "建立經驗學習（Lessons Learned）及紀錄文件、與贊助者顧客團隊共同檢討專案程序與成果，是結案報告的重要內容。", 0],
+          ["結案會議中的不滿處理", "若利害關係人在結案會議中有不滿，PM 應優先了解其對交付標的正確性、驗收爭議方面的疑慮。", 0]
+        ]},
+        { name: "結案爭議情境處理", points: [
+          ["客戶要求額外功能模組", "應開始合約收尾，並就額外功能模組另外簽訂「新合約」，而不是片面追加預算或直接拒絕客戶，避免範疇鍍金問題。", 1],
+          ["公共工程驗收爭議", "驗收人員與接收人員反對結案，通常反映雙方欠缺溝通，或專案團隊未事先與各方建立專案結案共識。", 0],
+          ["結案後內部會議的參與者", "通常以內部人員與客戶代表為主，技術廠商代表這類外部人員較不可能參加內部結案檢討會議。", 0]
+        ]}
+      ]
+    }
+  ];
+
+  // =================================================================
+  // 3) 以下是共用渲染邏輯，正常不需要修改
+  // =================================================================
+
+  document.getElementById("brand-name").textContent = CONFIG.pageTitle;
+  document.getElementById("hero-eyebrow").textContent = CONFIG.courseName + "・備課參考";
+
+  var totalQuestions = 0, totalSub = 0, totalLeaf = 0, totalHot = 0;
+  DATA.forEach(function (cat) {
+    totalQuestions += cat.count;
+    cat.subtopics.forEach(function (sub) {
+      totalSub++;
+      sub.points.forEach(function (p) { totalLeaf++; if (p[2]) totalHot++; });
+    });
+  });
+
+  document.getElementById("stat-line").textContent = DATA.length + "大類・" + totalSub + "子主題・共" + totalQuestions + "題";
+  document.getElementById("hero-title").textContent =
+    CONFIG.heroTitle || ("把 " + totalQuestions + " 題題庫，整理成可以直接拿去排課的大綱");
+  document.getElementById("hero-desc").textContent =
+    CONFIG.heroDesc || ("依 " + DATA.length + " 大類、" + totalSub + " 個子主題整理知識點，附建議授課比重，帶 ★ 的是題庫中特別容易混淆或高頻出現的重點，排課時可以多留一點時間。");
+  document.getElementById("page-footer").innerHTML =
+    "資料來源：" + escapeHtml(CONFIG.sourceNote) + "（" + escapeHtml(CONFIG.courseCode) + "）題目解析內容整理，共 " + totalQuestions + " 題。知識點文字為AI依題庫內容摘要整理，正式授課前建議對照原始題目複核。";
+
+  // ---------- jump nav (tabs) ----------
+  var jumpnav = document.getElementById("jumpnav");
+
+  var overviewChip = document.createElement("button");
+  overviewChip.type = "button";
+  overviewChip.className = "jumpchip";
+  overviewChip.setAttribute("data-tab", "overview");
+  overviewChip.textContent = "總覽";
+  jumpnav.appendChild(overviewChip);
+
+  DATA.forEach(function (cat, i) {
+    var a = document.createElement("button");
+    a.type = "button";
+    a.className = "jumpchip";
+    a.setAttribute("data-tab", String(i));
+    a.innerHTML = '<span class="dot" style="background:var(--' + cat.key + ')"></span>' + (i + 1) + ". " + escapeHtml(cat.short || cat.name);
+    jumpnav.appendChild(a);
+  });
+
+  // ---------- plan table ----------
+  var planTable = document.getElementById("plan-table");
+  var header = document.createElement("div");
+  header.className = "plan-row";
+  header.innerHTML = "<span></span><span>單元</span><span class='num'>題數</span><span class='num'>比重</span><span class='num'>子主題</span><span class='num'>重點★</span><span class='num'>建議時數</span>";
+  planTable.appendChild(header);
+
+  var hoursCells = [];
+
+  DATA.forEach(function (cat, i) {
+    var hotCount = 0, subCount = cat.subtopics.length;
+    cat.subtopics.forEach(function (s) { s.points.forEach(function (p) { if (p[2]) hotCount++; }); });
+    var fraction = totalQuestions ? cat.count / totalQuestions : 0;
+    var pct = Math.round(fraction * 100);
+
+    var row = document.createElement("a");
+    row.className = "plan-row";
+    row.href = "#unit-" + i;
+    row.setAttribute("data-tab", String(i));
+    row.innerHTML =
+      '<span class="dot" style="background:var(--' + cat.key + ')"></span>' +
+      '<span class="name">' + (i + 1) + ". " + escapeHtml(cat.name) + "</span>" +
+      '<span class="num">' + cat.count + "題</span>" +
+      '<span class="num">約 ' + pct + "%</span>" +
+      '<span class="num">' + subCount + "</span>" +
+      '<span class="num">' + hotCount + "</span>" +
+      '<span class="num hours-cell">—</span>';
+    planTable.appendChild(row);
+    hoursCells.push({ el: row.querySelector(".hours-cell"), fraction: fraction });
+
+    var bar = document.createElement("div");
+    bar.className = "weightbar";
+    bar.innerHTML = '<span style="width:' + pct + '%; background:var(--' + cat.key + ')"></span>';
+    planTable.appendChild(bar);
+  });
+
+  var hoursInput = document.getElementById("hours-input");
+  hoursInput.addEventListener("input", function () {
+    var total = parseFloat(hoursInput.value);
+    var valid = !isNaN(total) && total > 0;
+    if (!valid) {
+      hoursCells.forEach(function (c) { c.el.textContent = "—"; });
+      return;
+    }
+    // Largest-remainder apportionment in 0.5h slots, so the column always
+    // sums exactly to the entered total — rounding each row independently
+    // (old approach) can drift the total away from what the teacher typed.
+    var totalSlots = Math.max(0, Math.round(total * 2));
+    var raw = hoursCells.map(function (c) { return c.fraction * totalSlots; });
+    var base = raw.map(Math.floor);
+    var used = base.reduce(function (a, b) { return a + b; }, 0);
+    var remainder = totalSlots - used;
+    var order = raw
+      .map(function (v, i) { return { i: i, frac: v - base[i] }; })
+      .sort(function (a, b) { return b.frac - a.frac; });
+    for (var k = 0; k < remainder && k < order.length; k++) { base[order[k].i]++; }
+    hoursCells.forEach(function (c, i) { c.el.textContent = (base[i] * 0.5).toFixed(1) + "h"; });
+  });
+
+  // ---------- units ----------
+  var unitsEl = document.getElementById("units");
+  DATA.forEach(function (cat, ci) {
+    var section = document.createElement("section");
+    section.className = "unit";
+    section.id = "unit-" + ci;
+    section.style.setProperty("--u-color", "var(--" + cat.key + ")");
+    section.style.setProperty("--u-tint", "var(--" + cat.key + "-tint)");
+
+    var head = document.createElement("div");
+    head.className = "unit-head";
+    var subCount = cat.subtopics.length;
+    head.innerHTML =
+      '<span class="idx">' + (ci + 1) + "</span>" +
+      "<h2>" + escapeHtml(cat.name) + "</h2>" +
+      '<span class="unit-meta">' + cat.count + "題・" + subCount + "個子主題</span>" +
+      '<button class="unit-copy" data-ci="' + ci + '">複製本單元大綱</button>';
+    section.appendChild(head);
+
+    var grid = document.createElement("div");
+    grid.className = "subgrid";
+    cat.subtopics.forEach(function (sub) {
+      var card = document.createElement("div");
+      card.className = "subcard";
+      var h3 = document.createElement("h3");
+      h3.textContent = sub.name;
+      card.appendChild(h3);
+      var ul = document.createElement("ul");
+      sub.points.forEach(function (p) {
+        var terms = p[3];
+        var li = document.createElement("li");
+        li.className = "pt" + (p[2] ? " hot" : "") + (terms ? " expandable" : "");
+        var termsText = terms ? terms.map(function (t) { return t[0] + " " + t[1]; }).join(" ") : "";
+        li.setAttribute("data-text", (p[0] + " " + p[1] + " " + termsText).toLowerCase());
+        li.innerHTML =
+          '<div class="pt-row">' +
+          (p[2] ? '<span class="star">★</span>' : "") +
+          "<b>" + escapeHtml(p[0]) + "</b>　" + escapeHtml(p[1]) +
+          (terms ? '<span class="expand-mark" aria-hidden="true">展開<span class="chev">▾</span></span>' : "") +
+          "</div>";
+        if (terms) {
+          var sub2 = document.createElement("ul");
+          sub2.className = "sub-terms";
+          terms.forEach(function (t) {
+            var li2 = document.createElement("li");
+            li2.innerHTML = "<b>" + escapeHtml(t[0]) + "</b>　" + escapeHtml(t[1]);
+            sub2.appendChild(li2);
+          });
+          li.appendChild(sub2);
+          li.setAttribute("tabindex", "0");
+          li.setAttribute("role", "button");
+          li.setAttribute("aria-expanded", "false");
+          li.addEventListener("click", function () { toggleExpand(li); });
+          li.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleExpand(li); }
+          });
+        }
+        ul.appendChild(li);
+      });
+      card.appendChild(ul);
+      grid.appendChild(card);
+    });
+    section.appendChild(grid);
+    unitsEl.appendChild(section);
+  });
+
+  // ---------- tabs ----------
+  var currentTab = "overview";
+
+  function setActiveTab(tabId, opts) {
+    opts = opts || {};
+    currentTab = tabId;
+    var isOverview = tabId === "overview";
+
+    document.body.classList.toggle("tab-single", !isOverview);
+
+    DATA.forEach(function (cat, i) {
+      var el = document.getElementById("unit-" + i);
+      var show = isOverview || String(i) === String(tabId);
+      el.style.display = show ? "" : "none";
+      el.classList.toggle("single", !isOverview && show);
+    });
+
+    Array.prototype.forEach.call(jumpnav.querySelectorAll(".jumpchip"), function (chip) {
+      chip.classList.toggle("active", chip.getAttribute("data-tab") === String(tabId));
+    });
+
+    if (!opts.skipHash) {
+      history.replaceState(null, "", "#" + (isOverview ? "overview" : "unit-" + tabId));
+    }
+    applySearchFilter();
+    if (!opts.skipScroll) window.scrollTo({ top: 0, behavior: "auto" });
+  }
+
+  document.addEventListener("click", function (e) {
+    var tabEl = e.target.closest("[data-tab]");
+    if (tabEl) {
+      e.preventDefault();
+      setActiveTab(tabEl.getAttribute("data-tab"));
+    }
+  });
+
+  document.getElementById("btn-back").addEventListener("click", function () {
+    setActiveTab("overview");
+  });
+
+  function initTabFromHash() {
+    var h = location.hash.replace("#", "");
+    var m = h.match(/^unit-(\d+)$/);
+    if (m && DATA[parseInt(m[1], 10)]) {
+      setActiveTab(m[1], { skipHash: true, skipScroll: true });
+    } else {
+      setActiveTab("overview", { skipHash: true, skipScroll: true });
+    }
+  }
+
+  function toggleExpand(li) {
+    var isOpen = li.classList.toggle("expanded");
+    li.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  // ---------- copy outline ----------
+  function outlineText(ci) {
+    var cat = DATA[ci];
+    var lines = [cat.name + "（" + cat.count + "題）", ""];
+    cat.subtopics.forEach(function (sub) {
+      lines.push("■ " + sub.name);
+      sub.points.forEach(function (p) {
+        lines.push("　" + (p[2] ? "★ " : "・") + p[0] + "：" + p[1]);
+        if (p[3]) {
+          p[3].forEach(function (t) { lines.push("　　- " + t[0] + "：" + t[1]); });
+        }
+      });
+      lines.push("");
+    });
+    return lines.join("\n");
+  }
+  function copyText(text, btn) {
+    var done = function () {
+      var old = btn.textContent;
+      btn.textContent = "已複製 ✓";
+      setTimeout(function () { btn.textContent = old; }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text); done(); });
+    } else {
+      fallbackCopy(text); done();
+    }
+  }
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".unit-copy");
+    if (btn) copyText(outlineText(parseInt(btn.getAttribute("data-ci"), 10)), btn);
+  });
+
+  document.getElementById("btn-copyall").addEventListener("click", function (e) {
+    var all = DATA.map(function (_, i) { return outlineText(i); }).join("\n");
+    copyText(CONFIG.courseName + "　備課大綱\n\n" + all, e.currentTarget);
+  });
+
+  // ---------- expand/collapse all term breakdowns ----------
+  var termsExpanded = false;
+  document.getElementById("btn-expand-terms").addEventListener("click", function (e) {
+    termsExpanded = !termsExpanded;
+    e.currentTarget.textContent = termsExpanded ? "▴ 收合全部名詞說明" : "▾ 展開全部名詞說明";
+    Array.prototype.forEach.call(document.querySelectorAll(".subcard li.expandable"), function (li) {
+      li.classList.toggle("expanded", termsExpanded);
+      li.classList.remove("auto-expanded");
+      li.setAttribute("aria-expanded", termsExpanded ? "true" : "false");
+    });
+  });
+
+  // ---------- hot filter ----------
+  var hotOn = false;
+  document.getElementById("btn-hot").addEventListener("click", function (e) {
+    hotOn = !hotOn;
+    e.currentTarget.classList.toggle("active", hotOn);
+    Array.prototype.forEach.call(document.querySelectorAll(".subcard li"), function (li) {
+      li.classList.toggle("pt-dim", hotOn && !li.classList.contains("hot"));
+    });
+  });
+
+  // ---------- search ----------
+  var searchInput = document.getElementById("search");
+
+  function applySearchFilter() {
+    var q = searchInput.value.trim().toLowerCase();
+    var anyMatch = false;
+    var isOverview = currentTab === "overview";
+
+    DATA.forEach(function (cat, i) {
+      var unit = document.getElementById("unit-" + i);
+      var tabEligible = isOverview || String(i) === String(currentTab);
+      if (!tabEligible) return;
+
+      var unitHasMatch = false;
+      Array.prototype.forEach.call(unit.querySelectorAll(".subcard"), function (card) {
+        var cardHasMatch = false;
+        // .pt only — a plain "li" selector would also match the nested
+        // <li> inside .sub-terms, which have no data-text and crash .indexOf.
+        Array.prototype.forEach.call(card.querySelectorAll("li.pt"), function (li) {
+          var isMatch = q && li.getAttribute("data-text").indexOf(q) !== -1;
+          li.classList.toggle("pt-match", !!isMatch);
+          li.classList.toggle("pt-dim", !!q && !isMatch);
+          if (isMatch) {
+            cardHasMatch = true;
+            anyMatch = true;
+            if (li.classList.contains("expandable") && !li.classList.contains("expanded")) {
+              li.classList.add("expanded", "auto-expanded");
+              li.setAttribute("aria-expanded", "true");
+            }
+          } else if (li.classList.contains("auto-expanded")) {
+            li.classList.remove("expanded", "auto-expanded");
+            li.setAttribute("aria-expanded", "false");
+          }
+        });
+        card.style.display = (!q || cardHasMatch) ? "" : "none";
+        if (cardHasMatch) unitHasMatch = true;
+      });
+
+      if (isOverview) unit.style.display = (!q || unitHasMatch) ? "" : "none";
+    });
+
+    document.getElementById("no-results").style.display = (q && !anyMatch) ? "block" : "none";
+    document.getElementById("no-results-q").textContent = q;
+  }
+
+  searchInput.addEventListener("input", applySearchFilter);
+
+  initTabFromHash();
+})();
+</script>
