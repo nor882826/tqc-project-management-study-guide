@@ -253,8 +253,27 @@
     padding: 0 0 16px;
   }
   .back-to-overview:hover { color: var(--ink); }
-  body.tab-single .back-to-overview { display: inline-flex; }
-  body.tab-single #plan-table, body.tab-single .hero, body.tab-single .hours-wrap { display: none; }
+  body.tab-single .back-to-overview, body.tab-diagrams .back-to-overview { display: inline-flex; }
+  body.tab-single #plan-table, body.tab-single .hero, body.tab-single .hours-wrap,
+  body.tab-diagrams #plan-table, body.tab-diagrams .hero, body.tab-diagrams .hours-wrap { display: none; }
+
+  /* ---------- diagram gallery tab ---------- */
+  #diagram-gallery { display: none; }
+  body.tab-diagrams #diagram-gallery { display: flex; flex-direction: column; gap: 20px; margin-top: 8px; }
+  .diagram-card {
+    background: var(--u-tint);
+    border: 1px solid color-mix(in oklab, var(--u-color) 30%, var(--hairline));
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .diagram-card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .diagram-card-head .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .diagram-card-cat { font-size: 11.5px; color: var(--ink-muted); font-weight: 700; }
+  .diagram-card-sep { color: var(--ink-muted); font-size: 11px; }
+  .diagram-card-sub { font-size: 14px; font-weight: 900; color: var(--ink); font-family: "Noto Serif TC", serif; }
+  .diagram-card-link { margin-left: auto; font-size: 11.5px; font-weight: 700; color: var(--u-color); text-decoration: none; white-space: nowrap; }
+  .diagram-card-link:hover { text-decoration: underline; }
+  .diagram-card .diagram { margin: 0; }
 
   .subcard {
     background: var(--u-tint);
@@ -386,6 +405,7 @@
   <div class="plan-table" id="plan-table"></div>
 
   <div id="units"></div>
+  <div id="diagram-gallery"></div>
   <div id="no-results">沒有符合「<span id="no-results-q"></span>」的知識點</div>
 
   <footer id="page-footer"></footer>
@@ -923,6 +943,13 @@
   overviewChip.textContent = "總覽";
   jumpnav.appendChild(overviewChip);
 
+  var diagramsChip = document.createElement("button");
+  diagramsChip.type = "button";
+  diagramsChip.className = "jumpchip";
+  diagramsChip.setAttribute("data-tab", "diagrams");
+  diagramsChip.textContent = "🖼 圖解索引";
+  jumpnav.appendChild(diagramsChip);
+
   DATA.forEach(function (cat, i) {
     var a = document.createElement("button");
     a.type = "button";
@@ -1063,6 +1090,32 @@
     unitsEl.appendChild(section);
   });
 
+  // ---------- diagram gallery ----------
+  var galleryEl = document.getElementById("diagram-gallery");
+  DATA.forEach(function (cat, ci) {
+    cat.subtopics.forEach(function (sub) {
+      if (!sub.diagram) return;
+      var card = document.createElement("div");
+      card.className = "diagram-card";
+      card.style.setProperty("--u-color", "var(--" + cat.key + ")");
+      card.style.setProperty("--u-tint", "var(--" + cat.key + "-tint)");
+      var head = document.createElement("div");
+      head.className = "diagram-card-head";
+      head.innerHTML =
+        '<span class="dot" style="background:var(--' + cat.key + ')"></span>' +
+        '<span class="diagram-card-cat">' + escapeHtml(cat.name) + '</span>' +
+        '<span class="diagram-card-sep">›</span>' +
+        '<span class="diagram-card-sub">' + escapeHtml(sub.name) + '</span>' +
+        '<a href="#unit-' + ci + '" class="diagram-card-link" data-tab="' + ci + '">看完整內容 →</a>';
+      card.appendChild(head);
+      var diagramWrap = document.createElement("div");
+      diagramWrap.className = "diagram";
+      diagramWrap.innerHTML = sub.diagram;
+      card.appendChild(diagramWrap);
+      galleryEl.appendChild(card);
+    });
+  });
+
   // ---------- tabs ----------
   var currentTab = "overview";
 
@@ -1070,14 +1123,16 @@
     opts = opts || {};
     currentTab = tabId;
     var isOverview = tabId === "overview";
+    var isDiagrams = tabId === "diagrams";
 
-    document.body.classList.toggle("tab-single", !isOverview);
+    document.body.classList.toggle("tab-single", !isOverview && !isDiagrams);
+    document.body.classList.toggle("tab-diagrams", isDiagrams);
 
     DATA.forEach(function (cat, i) {
       var el = document.getElementById("unit-" + i);
-      var show = isOverview || String(i) === String(tabId);
+      var show = !isDiagrams && (isOverview || String(i) === String(tabId));
       el.style.display = show ? "" : "none";
-      el.classList.toggle("single", !isOverview && show);
+      el.classList.toggle("single", !isOverview && !isDiagrams && show);
     });
 
     Array.prototype.forEach.call(jumpnav.querySelectorAll(".jumpchip"), function (chip) {
@@ -1085,7 +1140,7 @@
     });
 
     if (!opts.skipHash) {
-      history.replaceState(null, "", "#" + (isOverview ? "overview" : "unit-" + tabId));
+      history.replaceState(null, "", "#" + (isOverview ? "overview" : isDiagrams ? "diagrams" : "unit-" + tabId));
     }
     applySearchFilter();
     if (!opts.skipScroll) window.scrollTo({ top: 0, behavior: "auto" });
@@ -1108,6 +1163,8 @@
     var m = h.match(/^unit-(\d+)$/);
     if (m && DATA[parseInt(m[1], 10)]) {
       setActiveTab(m[1], { skipHash: true, skipScroll: true });
+    } else if (h === "diagrams") {
+      setActiveTab("diagrams", { skipHash: true, skipScroll: true });
     } else {
       setActiveTab("overview", { skipHash: true, skipScroll: true });
     }
