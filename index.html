@@ -1306,7 +1306,7 @@
   document.getElementById("btn-hot").addEventListener("click", function (e) {
     hotOn = !hotOn;
     e.currentTarget.classList.toggle("active", hotOn);
-    Array.prototype.forEach.call(document.querySelectorAll(".subcard li"), function (li) {
+    Array.prototype.forEach.call(document.querySelectorAll(".subcard li.pt"), function (li) {
       li.classList.toggle("pt-dim", hotOn && !li.classList.contains("hot"));
     });
   });
