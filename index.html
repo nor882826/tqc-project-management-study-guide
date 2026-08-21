@@ -900,33 +900,24 @@
           ["柏拉圖法則（80/20 法則）", "80% 問題的產生可歸責於 20% 的缺失原因，常直接考「這個原理稱為下列哪一項」。", 1, null, "80/20 法則：籌備出的80%問題，通常都是那20%固定的原因造成的（例如老是同一組拖進度）。"]
         ]},
         { name: "時程與成本控制",
-          diagram: '<figure><svg viewBox="0 0 580 300" role="img" aria-label="EVM實獲值管理S曲線圖，PV高於AC高於EV代表進度落後且超支">' +
-            '<text x="290" y="14" class="fnote">範例：截至「資料日期」，進度落後且超支的專案</text>' +
-            '<line x1="50" y1="30" x2="50" y2="235" class="faxis"/>' +
-            '<line x1="45" y1="230" x2="545" y2="230" class="faxis"/>' +
-            '<text x="30" y="30" class="ftick">累積金額</text>' +
-            '<text x="540" y="248" class="ftick">時間 →</text>' +
-            '<line x1="290" y1="26" x2="290" y2="230" class="fline fdash" stroke="var(--ink-muted)"/>' +
-            '<text x="290" y="264" class="ftick">資料日期（現在）</text>' +
-            '<path d="M50,230 C160,225 210,150 280,120 C360,85 420,60 540,50" class="fline" stroke="var(--u-color)" stroke-width="2.6" fill="none"/>' +
-            '<path d="M50,230 C140,227 190,190 240,175 C260,170 275,167 290,165" class="fline" stroke="var(--c3)" stroke-width="2.6" fill="none"/>' +
-            '<path d="M50,230 C140,225 200,175 250,150 C265,145 278,142 290,140" class="fline fdash" stroke="var(--accent-ring)" stroke-width="2.6" fill="none"/>' +
-            '<circle cx="290" cy="115" r="5" fill="var(--u-color)"/>' +
-              '<rect x="300" y="105" width="112" height="20" rx="4" fill="var(--card)"/>' +
-              '<text x="306" y="119" class="flabel" text-anchor="start">PV 計畫值</text>' +
-            '<circle cx="290" cy="140" r="5" fill="var(--accent-ring)"/>' +
-              '<rect x="300" y="130" width="122" height="20" rx="4" fill="var(--card)"/>' +
-              '<text x="306" y="144" class="flabel" text-anchor="start" fill="var(--accent-ring)">AC 實際成本</text>' +
-            '<circle cx="290" cy="165" r="5" fill="var(--c3)"/>' +
-              '<rect x="300" y="155" width="112" height="20" rx="4" fill="var(--card)"/>' +
-              '<text x="306" y="169" class="flabel" text-anchor="start" fill="var(--c3)">EV 實獲值</text>' +
-            '<g class="flegend">' +
-              '<line x1="55" y1="278" x2="85" y2="278" class="fline" stroke="var(--u-color)" stroke-width="2.6"/><text x="92" y="282">PV 計畫值（依計畫應完成多少）</text>' +
-              '<line x1="315" y1="278" x2="345" y2="278" class="fline" stroke="var(--c3)" stroke-width="2.6"/><text x="352" y="282">EV 實獲值（實際完成多少）</text>' +
-            '</g>' +
-            '<g class="flegend">' +
-              '<line x1="55" y1="296" x2="85" y2="296" class="fline fdash" stroke="var(--accent-ring)" stroke-width="2.6"/><text x="92" y="300">AC 實際成本（實際花了多少）</text>' +
-            '</g>' +
+          diagram: '<figure><svg viewBox="0 0 720 260" role="img" aria-label="EVM實獲值管理S曲線圖，PV高於AC高於EV代表進度落後且超支">' +
+            '<text x="440" y="14" class="fnote">範例：截至「資料日期」，進度落後且超支的專案</text>' +
+            '<rect x="10" y="86" width="150" height="120" rx="10" fill="var(--card)" stroke="var(--hairline)" stroke-width="1"/>' +
+            '<line x1="24" y1="112" x2="44" y2="112" class="fline" stroke="var(--u-color)" stroke-width="3"/><text x="50" y="116" class="flabel" style="text-anchor:start">PV</text><text x="24" y="134" class="fsub" style="text-anchor:start">計畫值</text>' +
+            '<line x1="24" y1="146" x2="44" y2="146" class="fline fdash" stroke="var(--accent-ring)" stroke-width="3"/><text x="50" y="150" class="flabel" style="text-anchor:start" fill="var(--accent-ring)">AC</text><text x="24" y="168" class="fsub" style="text-anchor:start">實際成本</text>' +
+            '<line x1="24" y1="180" x2="44" y2="180" class="fline" stroke="var(--c3)" stroke-width="3"/><text x="50" y="184" class="flabel" style="text-anchor:start" fill="var(--c3)">EV</text><text x="24" y="202" class="fsub" style="text-anchor:start">實獲值</text>' +
+            '<line x1="190" y1="30" x2="190" y2="235" class="faxis"/>' +
+            '<line x1="185" y1="230" x2="685" y2="230" class="faxis"/>' +
+            '<text x="170" y="30" class="ftick">累積金額</text>' +
+            '<text x="680" y="248" class="ftick">時間 →</text>' +
+            '<line x1="430" y1="26" x2="430" y2="230" class="fline fdash" stroke="var(--ink-muted)"/>' +
+            '<text x="430" y="248" class="ftick">資料日期（現在）</text>' +
+            '<path d="M190,230 C300,225 350,150 420,120 C500,85 560,60 680,50" class="fline" stroke="var(--u-color)" stroke-width="2.6" fill="none"/>' +
+            '<path d="M190,230 C280,227 330,190 380,175 C400,170 415,167 430,165" class="fline" stroke="var(--c3)" stroke-width="2.6" fill="none"/>' +
+            '<path d="M190,230 C280,225 340,175 390,150 C405,145 418,142 430,140" class="fline fdash" stroke="var(--accent-ring)" stroke-width="2.6" fill="none"/>' +
+            '<circle cx="430" cy="115" r="5" fill="var(--u-color)"/>' +
+            '<circle cx="430" cy="140" r="5" fill="var(--accent-ring)"/>' +
+            '<circle cx="430" cy="165" r="5" fill="var(--c3)"/>' +
             '</svg>' +
             '<figcaption>三條線在「資料日期」這一刻的高低順序，就是判讀 SV／CV 的關鍵：EV 低於 PV → 時程落後（SV=EV−PV 為負）；EV 低於 AC → 成本超支（CV=EV−AC 為負）。三線的相對高低會隨專案實際狀況改變，不是固定的。</figcaption>' +
             '</figure>',
