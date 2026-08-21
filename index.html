@@ -524,23 +524,28 @@
           ["專案成本花費最多的階段", "絕大多數的專案成本會在「執行」階段被花費掉，這點常跟「起始/規劃階段不確定性最高」放在一起考。", 1]
         ]},
         { name: "組織結構類型",
-          diagram: '<figure><svg viewBox="0 0 640 140" role="img" aria-label="五種組織結構中PM職權大小光譜圖">' +
-            '<defs><marker id="org-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="currentColor"/></marker></defs>' +
-            '<text x="320" y="14" class="fnote">PM 對專案資源與決策的職權，由左到右遞增</text>' +
-            '<circle cx="72" cy="34" r="4" fill="var(--u-color)"/>' +
-            '<circle cx="188" cy="34" r="4" fill="var(--u-color)"/><circle cx="204" cy="34" r="4" fill="var(--u-color)"/>' +
-            '<circle cx="304" cy="34" r="4" fill="var(--u-color)"/><circle cx="320" cy="34" r="4" fill="var(--u-color)"/><circle cx="336" cy="34" r="4" fill="var(--u-color)"/>' +
-            '<circle cx="428" cy="34" r="4" fill="var(--u-color)"/><circle cx="444" cy="34" r="4" fill="var(--u-color)"/><circle cx="460" cy="34" r="4" fill="var(--u-color)"/><circle cx="476" cy="34" r="4" fill="var(--u-color)"/>' +
-            '<circle cx="552" cy="34" r="4" fill="var(--u-color)"/><circle cx="568" cy="34" r="4" fill="var(--u-color)"/><circle cx="584" cy="34" r="4" fill="var(--u-color)"/><circle cx="600" cy="34" r="4" fill="var(--u-color)"/><circle cx="616" cy="34" r="4" fill="var(--u-color)"/>' +
-            '<rect x="10" y="50" width="124" height="34" rx="5" fill="var(--u-color)" fill-opacity="0.16" stroke="var(--u-color)" stroke-width="1.5"/><text x="72" y="71" class="flabel">功能式</text>' +
-            '<rect x="134" y="50" width="124" height="34" rx="5" fill="var(--u-color)" fill-opacity="0.34" stroke="var(--u-color)" stroke-width="1.5"/><text x="196" y="71" class="flabel">弱矩陣</text>' +
-            '<rect x="258" y="50" width="124" height="34" rx="5" fill="var(--u-color)" fill-opacity="0.52" stroke="var(--u-color)" stroke-width="1.5"/><text x="320" y="71" class="flabel">平衡矩陣</text>' +
-            '<rect x="382" y="50" width="124" height="34" rx="5" fill="var(--u-color)" fill-opacity="0.74" stroke="var(--u-color)" stroke-width="1.5"/><text x="444" y="71" class="flabel">強矩陣</text>' +
-            '<rect x="506" y="50" width="124" height="34" rx="5" fill="var(--u-color)" fill-opacity="1" stroke="none"/><text x="568" y="71" class="flabel on-solid">專案式</text>' +
-            '<text x="72" y="104" class="fsub">PM 近乎無職權</text>' +
-            '<text x="568" y="104" class="fsub">PM 職權最大</text>' +
+          diagram: '<figure><svg viewBox="0 0 600 250" role="img" aria-label="五種組織結構中PM職權高低階梯圖，由功能式到專案式遞增">' +
+            '<text x="300" y="14" class="fnote">柱子越高，代表 PM 對專案資源與決策的職權越大</text>' +
+            '<line x1="35" y1="195" x2="580" y2="195" class="faxis"/>' +
+            '<rect x="20" y="170" width="90" height="25" rx="4" class="fbox solid" fill="var(--u-color)" fill-opacity="0.28" stroke="none"/>' +
+            '<rect x="130" y="140" width="90" height="55" rx="4" class="fbox solid" fill="var(--u-color)" fill-opacity="0.46" stroke="none"/>' +
+            '<rect x="240" y="105" width="90" height="90" rx="4" class="fbox solid" fill="var(--u-color)" fill-opacity="0.64" stroke="none"/>' +
+            '<rect x="350" y="70" width="90" height="125" rx="4" class="fbox solid" fill="var(--u-color)" fill-opacity="0.82" stroke="none"/>' +
+            '<rect x="460" y="35" width="90" height="160" rx="4" class="fbox solid" fill="var(--u-color)" fill-opacity="1" stroke="none"/>' +
+            '<text x="65" y="163" class="fsub">幾近無</text>' +
+            '<text x="175" y="133" class="fsub">有限</text>' +
+            '<text x="285" y="98" class="fsub">低～中</text>' +
+            '<text x="395" y="63" class="fsub">中～高</text>' +
+            '<text x="505" y="28" class="fsub">高～近乎全權</text>' +
+            '<text x="65" y="215" class="flabel">功能式</text>' +
+            '<text x="175" y="215" class="flabel">弱矩陣</text>' +
+            '<text x="285" y="215" class="flabel">平衡矩陣</text>' +
+            '<text x="395" y="215" class="flabel">強矩陣</text>' +
+            '<text x="505" y="215" class="flabel">專案式</text>' +
+            '<text x="65" y="230" class="ftick">PM≈0</text>' +
+            '<text x="505" y="230" class="ftick">PM≈全權</text>' +
             '</svg>' +
-            '<figcaption>頂端的圓點數量代表 PM 職權高低——功能式最少（PM 近乎沒有正式職權，需向功能經理討資源），一路增加到專案式最多（PM 幾乎全權主導）。弱矩陣、平衡矩陣、強矩陣是中間過渡的三個級距，區分依據就是 PM 與功能經理誰的話語權比較大。</figcaption>' +
+            '<figcaption>柱子高度＝ PM 對這種組織結構的掌控力：功能式最矮（PM 幾乎沒有正式職權，要跟功能經理要資源），一路墊高到專案式最高（PM 幾乎全權主導）。弱矩陣／平衡矩陣／強矩陣是中間三個過渡級距，差別就在 PM 跟功能經理誰的話語權比較大。</figcaption>' +
             '</figure>',
           points: [
           ["五種組織結構光譜", "從功能式到專案式，中間夾著弱矩陣/平衡矩陣/強矩陣，PM 的職權大小隨光譜遞增，是這個大類的核心考點。", 1, [
