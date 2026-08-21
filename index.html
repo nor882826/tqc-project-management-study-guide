@@ -643,42 +643,48 @@
           ]]
         ]},
         { name: "時程規劃",
-          diagram: '<figure><svg viewBox="0 0 650 260" role="img" aria-label="前導圖四種邏輯關係對照圖">' +
-            '<defs><marker id="seq-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="currentColor"/></marker></defs>' +
-            '<g transform="translate(6,6)">' +
-              '<text x="150" y="12" class="flabel">完成-開始 FS（最常用）</text>' +
-              '<text x="14" y="42" class="fsub">A</text><rect x="30" y="30" width="100" height="20" rx="4" class="fbox"/>' +
-              '<text x="14" y="82" class="fsub">B</text><rect x="170" y="70" width="100" height="20" rx="4" class="fbox"/>' +
-              '<path d="M130,40 L150,40 L150,80 L168,80" class="fline" marker-end="url(#seq-arrow)"/>' +
-              '<text x="130" y="26" class="ftick">迄</text><text x="170" y="66" class="ftick">起</text>' +
-              '<text x="150" y="108" class="fnote">A「完成」了，B 才能「開始」</text>' +
-            '</g>' +
-            '<g transform="translate(326,6)">' +
-              '<text x="150" y="12" class="flabel">開始-開始 SS</text>' +
-              '<text x="14" y="42" class="fsub">A</text><rect x="50" y="30" width="100" height="20" rx="4" class="fbox"/>' +
-              '<text x="14" y="82" class="fsub">B</text><rect x="50" y="70" width="140" height="20" rx="4" class="fbox"/>' +
-              '<path d="M50,40 L50,80" class="fline" marker-end="url(#seq-arrow)"/>' +
-              '<text x="50" y="26" class="ftick">起</text><text x="50" y="66" class="ftick">起</text>' +
-              '<text x="150" y="108" class="fnote">A「開始」了，B 才能「開始」</text>' +
-            '</g>' +
-            '<g transform="translate(6,132)">' +
-              '<text x="150" y="12" class="flabel">完成-完成 FF</text>' +
-              '<text x="14" y="42" class="fsub">A</text><rect x="30" y="30" width="140" height="20" rx="4" class="fbox"/>' +
-              '<text x="14" y="82" class="fsub">B</text><rect x="90" y="70" width="80" height="20" rx="4" class="fbox"/>' +
-              '<path d="M170,40 L170,80" class="fline" marker-end="url(#seq-arrow)"/>' +
-              '<text x="170" y="26" class="ftick">迄</text><text x="170" y="66" class="ftick">迄</text>' +
-              '<text x="150" y="108" class="fnote">A「完成」了，B 才能「完成」</text>' +
-            '</g>' +
-            '<g transform="translate(326,132)">' +
-              '<text x="150" y="12" class="flabel">開始-完成 SF（最少見）</text>' +
-              '<text x="14" y="42" class="fsub">A</text><rect x="150" y="30" width="100" height="20" rx="4" class="fbox"/>' +
-              '<text x="14" y="82" class="fsub">B</text><rect x="50" y="70" width="100" height="20" rx="4" class="fbox"/>' +
-              '<path d="M150,40 L150,80" class="fline" marker-end="url(#seq-arrow)"/>' +
-              '<text x="150" y="26" class="ftick">起</text><text x="150" y="66" class="ftick">迄</text>' +
-              '<text x="150" y="108" class="fnote">A「開始」了，B 才能「完成」</text>' +
-            '</g>' +
+          diagram: '<figure><svg viewBox="0 0 640 520" role="img" aria-label="前導圖四種邏輯關係對照圖，A活動與B活動分別用綠色與紅色標示">' +
+            '<defs><marker id="seq-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--ink-2)"/></marker></defs>' +
+            '<rect x="215" y="4" width="20" height="16" rx="3" fill="var(--u-color)"/><text x="240" y="17" class="fsub" text-anchor="start">A 活動</text>' +
+            '<rect x="335" y="4" width="20" height="16" rx="3" fill="var(--accent-ring)"/><text x="360" y="17" class="fsub" text-anchor="start">B 活動</text>' +
+
+            '<text x="320" y="52" class="flabel">完成-開始 FS（最常用）</text>' +
+            '<text x="45" y="80" class="fsub" text-anchor="end">A</text>' +
+            '<rect x="60" y="67" width="220" height="26" rx="5" fill="var(--u-color)"/>' +
+            '<text x="45" y="114" class="fsub" text-anchor="end">B</text>' +
+            '<rect x="360" y="101" width="220" height="26" rx="5" fill="var(--accent-ring)"/>' +
+            '<path d="M280,80 L300,80 L300,114 L356,114" class="fline" stroke="var(--ink-2)" marker-end="url(#seq-arrow)"/>' +
+            '<circle cx="280" cy="80" r="5" fill="var(--ink-2)"/><circle cx="360" cy="114" r="5" fill="var(--ink-2)"/>' +
+            '<text x="320" y="146" class="fnote">A「完成」的那一刻，B 才能「開始」</text>' +
+
+            '<text x="320" y="182" class="flabel">開始-開始 SS</text>' +
+            '<text x="45" y="210" class="fsub" text-anchor="end">A</text>' +
+            '<rect x="100" y="197" width="220" height="26" rx="5" fill="var(--u-color)"/>' +
+            '<text x="45" y="244" class="fsub" text-anchor="end">B</text>' +
+            '<rect x="100" y="231" width="320" height="26" rx="5" fill="var(--accent-ring)"/>' +
+            '<path d="M100,210 L100,229" class="fline" stroke="var(--ink-2)" marker-end="url(#seq-arrow)"/>' +
+            '<circle cx="100" cy="210" r="5" fill="var(--ink-2)"/><circle cx="100" cy="244" r="5" fill="var(--ink-2)"/>' +
+            '<text x="320" y="276" class="fnote">A「開始」的那一刻，B 也跟著「開始」</text>' +
+
+            '<text x="320" y="312" class="flabel">完成-完成 FF</text>' +
+            '<text x="45" y="340" class="fsub" text-anchor="end">A</text>' +
+            '<rect x="60" y="327" width="320" height="26" rx="5" fill="var(--u-color)"/>' +
+            '<text x="45" y="374" class="fsub" text-anchor="end">B</text>' +
+            '<rect x="200" y="361" width="180" height="26" rx="5" fill="var(--accent-ring)"/>' +
+            '<path d="M380,340 L380,359" class="fline" stroke="var(--ink-2)" marker-end="url(#seq-arrow)"/>' +
+            '<circle cx="380" cy="340" r="5" fill="var(--ink-2)"/><circle cx="380" cy="374" r="5" fill="var(--ink-2)"/>' +
+            '<text x="320" y="406" class="fnote">A「完成」的那一刻，B 也跟著「完成」</text>' +
+
+            '<text x="320" y="442" class="flabel">開始-完成 SF（最少見）</text>' +
+            '<text x="45" y="470" class="fsub" text-anchor="end">A</text>' +
+            '<rect x="340" y="457" width="220" height="26" rx="5" fill="var(--u-color)"/>' +
+            '<text x="45" y="504" class="fsub" text-anchor="end">B</text>' +
+            '<rect x="120" y="491" width="220" height="26" rx="5" fill="var(--accent-ring)"/>' +
+            '<path d="M340,470 L340,489" class="fline" stroke="var(--ink-2)" marker-end="url(#seq-arrow)"/>' +
+            '<circle cx="340" cy="470" r="5" fill="var(--ink-2)"/><circle cx="340" cy="504" r="5" fill="var(--ink-2)"/>' +
+            '<text x="320" y="519" class="fnote">A「開始」的那一刻，B 才能「完成」</text>' +
             '</svg>' +
-            '<figcaption>每個方框代表一個活動的持續期間；框上標的「起」「迄」是箭頭實際連接的那個時間點。四種關係只差在連接哪一點對哪一點——這正是考試最愛拿來互換考的地方。</figcaption>' +
+            '<figcaption>綠色是活動 A，紅色是活動 B；每個色塊的長度代表這個活動的持續期間。灰色圓點標出箭頭實際連接的那個時間點——四種關係只差在「連接 A 的起點還是迄點」對「B 的起點還是迄點」，這正是考試最愛互換著考的地方。</figcaption>' +
             '</figure>',
           points: [
           ["CPM 要徑法 vs PERT 計畫評核術", "CPM 用單時估算法、以經驗數據為基礎，適合確定性較高的專案；PERT 用三點估算法，適合高不確定性、複雜度高的專案。", 1, [
