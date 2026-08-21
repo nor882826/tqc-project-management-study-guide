@@ -911,9 +911,15 @@
             '<path d="M50,230 C160,225 210,150 280,120 C360,85 420,60 540,50" class="fline" stroke="var(--u-color)" stroke-width="2.6" fill="none"/>' +
             '<path d="M50,230 C140,227 190,190 240,175 C260,170 275,167 290,165" class="fline" stroke="var(--c3)" stroke-width="2.6" fill="none"/>' +
             '<path d="M50,230 C140,225 200,175 250,150 C265,145 278,142 290,140" class="fline fdash" stroke="var(--accent-ring)" stroke-width="2.6" fill="none"/>' +
-            '<circle cx="290" cy="115" r="5" fill="var(--u-color)"/><text x="304" y="112" class="flabel" text-anchor="start">PV</text>' +
-            '<circle cx="290" cy="140" r="5" fill="var(--accent-ring)"/><text x="304" y="145" class="flabel" text-anchor="start" fill="var(--accent-ring)">AC</text>' +
-            '<circle cx="290" cy="165" r="5" fill="var(--c3)"/><text x="304" y="180" class="flabel" text-anchor="start" fill="var(--c3)">EV</text>' +
+            '<circle cx="290" cy="115" r="5" fill="var(--u-color)"/>' +
+              '<rect x="300" y="105" width="112" height="20" rx="4" fill="var(--card)"/>' +
+              '<text x="306" y="119" class="flabel" text-anchor="start">PV 計畫值</text>' +
+            '<circle cx="290" cy="140" r="5" fill="var(--accent-ring)"/>' +
+              '<rect x="300" y="130" width="122" height="20" rx="4" fill="var(--card)"/>' +
+              '<text x="306" y="144" class="flabel" text-anchor="start" fill="var(--accent-ring)">AC 實際成本</text>' +
+            '<circle cx="290" cy="165" r="5" fill="var(--c3)"/>' +
+              '<rect x="300" y="155" width="112" height="20" rx="4" fill="var(--card)"/>' +
+              '<text x="306" y="169" class="flabel" text-anchor="start" fill="var(--c3)">EV 實獲值</text>' +
             '<g class="flegend">' +
               '<line x1="55" y1="278" x2="85" y2="278" class="fline" stroke="var(--u-color)" stroke-width="2.6"/><text x="92" y="282">PV 計畫值（依計畫應完成多少）</text>' +
               '<line x1="315" y1="278" x2="345" y2="278" class="fline" stroke="var(--c3)" stroke-width="2.6"/><text x="352" y="282">EV 實獲值（實際完成多少）</text>' +
