@@ -1,3 +1,8 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>專案管理概論V3備課大綱</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -298,16 +303,18 @@
     border-top: 1px dashed color-mix(in oklab, var(--u-color) 35%, var(--hairline));
     font-size: 14px; color: var(--ink-2); line-height: 1.75; text-align: left;
   }
-  .diagram .fbox { fill: var(--card); stroke: var(--u-color); stroke-width: 2; }
+  .diagram .fbox:not([fill^="var(--c"]) { fill: var(--card); stroke: var(--u-color); stroke-width: 2; }
   .diagram .fbox.hi { stroke-width: 3; fill: var(--accent-bg); stroke: var(--accent-ring); }
-  .diagram .fbox.solid { fill: var(--u-color); fill-opacity: 0.85; stroke: none; }
-  .diagram .flabel { font-family: "Noto Sans TC", sans-serif; font-size: 13px; font-weight: 700; fill: var(--ink); text-anchor: middle; }
+  .diagram .fbox.solid:not([fill^="var(--c"]) { fill: var(--u-color); fill-opacity: 0.85; stroke: none; }
+  .diagram .fbox.solid[fill^="var(--c"] { fill-opacity: 0.85; stroke: none; }
+  .diagram .flabel:not([fill^="var(--c"]):not([fill="var(--accent-ring)"]) { font-family: "Noto Sans TC", sans-serif; font-size: 13px; font-weight: 700; fill: var(--ink); text-anchor: middle; }
+  .diagram .flabel { font-family: "Noto Sans TC", sans-serif; font-size: 13px; font-weight: 700; text-anchor: middle; }
   .diagram .flabel.on-solid { fill: var(--card); }
   .diagram .fsub { font-family: "Noto Sans TC", sans-serif; font-size: 11px; fill: var(--ink-muted); text-anchor: middle; }
   .diagram .fnote { font-family: "Noto Sans TC", sans-serif; font-size: 11.5px; font-weight: 700; fill: var(--ink-2); text-anchor: middle; }
   .diagram .ftick { font-family: "Noto Sans TC", sans-serif; font-size: 10px; fill: var(--ink-muted); text-anchor: middle; }
   .diagram .fcallout { font-family: "Noto Sans TC", sans-serif; font-size: 12px; font-weight: 700; fill: var(--accent-ring); text-anchor: middle; }
-  .diagram .fline { stroke: var(--u-color); stroke-width: 2; fill: none; }
+  .diagram .fline:not([stroke^="var(--c"]) { stroke: var(--u-color); stroke-width: 2; fill: none; }
   .diagram .fdash { stroke-dasharray: 5 4; }
   .diagram .faxis { stroke: var(--ink-muted); stroke-width: 1.3; fill: none; }
   .diagram .fbar { stroke: none; }
@@ -1383,3 +1390,4 @@
   initTabFromHash();
 })();
 </script>
+</html>
