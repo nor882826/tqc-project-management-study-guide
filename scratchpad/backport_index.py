@@ -68,7 +68,7 @@ def load_teacher():
 
 def reconcile(teacher_data, source):
     report = {"subtopic_rename": [], "point_replace": [], "point_insert": [],
-              "point_relabel": [], "warnings": []}
+              "point_relabel": [], "point_delete": [], "diagram_add": [], "warnings": []}
     for t_cat, s_cat in zip(teacher_data, source):
         if len(t_cat["subtopics"]) != len(s_cat["subtopics"]):
             report["warnings"].append(
@@ -80,7 +80,13 @@ def reconcile(teacher_data, source):
                 report["subtopic_rename"].append((t_cat["name"], t_sub["name"], s_sub["name"]))
                 t_sub["name"] = s_sub["name"]
 
+            if s_sub.get("diagram") and not t_sub.get("diagram"):
+                t_sub["diagram"] = s_sub["diagram"]
+                report["diagram_add"].append((t_cat["name"], t_sub["name"]))
+
             label_to_idx = {p[0]: i for i, p in enumerate(t_sub["points"])}
+            matched_teacher_idx = set()
+            student_labels = {p[0] for p in s_sub["points"]}
             for s_point in s_sub["points"]:
                 label = s_point[0]
                 match_idx = label_to_idx.get(label)
@@ -90,12 +96,27 @@ def reconcile(teacher_data, source):
                         match_idx = label_to_idx[old_label]
                         report["point_relabel"].append((t_cat["name"], t_sub["name"], old_label, label))
                 if match_idx is not None:
+                    matched_teacher_idx.add(match_idx)
                     if t_sub["points"][match_idx] != s_point:
                         t_sub["points"][match_idx] = s_point
                         report["point_replace"].append((t_cat["name"], t_sub["name"], label))
                 else:
                     t_sub["points"].append(s_point)
+                    matched_teacher_idx.add(len(t_sub["points"]) - 1)
                     report["point_insert"].append((t_cat["name"], t_sub["name"], label))
+
+            # 學生版已經沒有、且不是「舊名字改名」對象的知識點 → 從老師版刪除
+            # （避免student端刪掉的重複/矛盾內容繼續留在teacher端）
+            kept_points = []
+            for i, p in enumerate(t_sub["points"]):
+                if i in matched_teacher_idx or p[0] in student_labels:
+                    kept_points.append(p)
+                elif p[0] in OLD_TO_NEW_LABEL and OLD_TO_NEW_LABEL[p[0]] in student_labels:
+                    # 這個是舊標籤，理論上已經在上面被relabel/replace處理掉了，不應該還在
+                    report["point_delete"].append((t_cat["name"], t_sub["name"], p[0], "改名後的舊標籤,不應殘留"))
+                else:
+                    report["point_delete"].append((t_cat["name"], t_sub["name"], p[0], "student端已移除"))
+            t_sub["points"] = kept_points
     return report
 
 
@@ -127,8 +148,13 @@ def ser_subtopic(st, diagram_store, is_last):
     diagram_val = st.get("diagram")
     lines = []
     if diagram_val:
-        n = int(DIAG_RE.match(diagram_val).group(1))
-        raw = diagram_store[n]
+        m = DIAG_RE.match(diagram_val)
+        if m:
+            raw = diagram_store[int(m.group(1))]  # 既有diagram：還原成原本的JS字串接續格式
+        else:
+            # 新同步進來的diagram：目前是JSON字串(原本從student端的JSON DATA來)，
+            # 直接包成單一單引號JS字串即可，不用刻意切成'...'+'...'多行格式
+            raw = "diagram: '" + diagram_val.replace("\\", "\\\\").replace("'", "\\'") + "'"
         lines.append(f'        {{ name: {ser_str(st["name"])},')
         lines.append(f'          {raw},')
         lines.append('          points: [')
@@ -174,6 +200,12 @@ def main():
     print(f"\n內容更新: {len(report['point_replace'])}")
     print(f"新增知識點: {len(report['point_insert'])}")
     for x in report["point_insert"]:
+        print(" ", x)
+    print(f"\n刪除知識點(student端已移除): {len(report['point_delete'])}")
+    for x in report["point_delete"]:
+        print(" ", x)
+    print(f"\n新增diagram: {len(report['diagram_add'])}")
+    for x in report["diagram_add"]:
         print(" ", x)
 
     body_lines = ['var DATA = [']
